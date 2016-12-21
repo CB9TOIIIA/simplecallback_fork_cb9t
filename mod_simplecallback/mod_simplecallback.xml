@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.0" client="site" method="upgrade">
+    <name>Simple Callback Module</name>
+    <author>Alexey Startler</author>
+    <authorEmail>info@startler.ru</authorEmail>
+    <authorUrl>https://github.com/birdkiwi/mod_simplecallback</authorUrl>
+    <version>1.5.0</version>
+    <creationDate>24.02.2015</creationDate>
+    <description>MOD_SIMPLECALLBACK_GENERAL_DESC</description>
+    <files>
+        <filename>mod_simplecallback.xml</filename>
+        <filename module="mod_simplecallback">mod_simplecallback.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+        <filename>tmpl/default.php</filename>
+        <filename>tmpl/index.html</filename>
+        <filename>README.md</filename>
+        <folder>language</folder>
+        <folder>lib</folder>
+    </files>
+    <media folder="media/mod_simplecallback" destination="mod_simplecallback">
+        <folder>css</folder>
+        <folder>js</folder>
+        <folder>images</folder>
+    </media>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_simplecallback.sys.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_simplecallback.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_simplecallback.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.mod_simplecallback.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset
+                    name="basic"
+                    label="MOD_SIMPLECALLBACK_PARAMS_LABEL"
+                    description="MOD_SIMPLECALLBACK_PARAMS_DESC"
+                    >
+                <field
+                        type="radio"
+                        name="simplecallback_overlay"
+                        label="MOD_SIMPLECALLBACK_RECEPIENTS_OVERLAY_LABEL"
+                        description="MOD_SIMPLECALLBACK_RECEPIENTS_OVERLAY_DESC"
+                        default="0"
+                        >
+                    <option value="0">MOD_SIMPLECALLBACK_RECEPIENTS_OVERLAY_MODULE</option>
+                    <option value="1">MOD_SIMPLECALLBACK_RECEPIENTS_OVERLAY_OVERLAY</option>
+                </field>
+                <field type="spacer" name="myspacer1" class="text" label="MOD_SIMPLECALLBACK_FORM_PARAMS" />
+                <field
+                        type="text"
+                        name="simplecallback_name_field_label"
+                        label="MOD_SIMPLECALLBACK_NAME_FIELD_LABEL"
+                        description="MOD_SIMPLECALLBACK_NAME_FIELD_LABEL_DESC"
+                        default="MOD_SIMPLECALLBACK_NAME_FIELD"
+                        translate_default="true"
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_phone_field_label"
+                        label="MOD_SIMPLECALLBACK_PHONE_FIELD_LABEL"
+                        description="MOD_SIMPLECALLBACK_PHONE_FIELD_LABEL_DESC"
+                        default="MOD_SIMPLECALLBACK_PHONE_FIELD"
+                        translate_default="true"
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_phone_field_mask"
+                        label="MOD_SIMPLECALLBACK_PHONE_FIELD_MASK"
+                        description="MOD_SIMPLECALLBACK_PHONE_FIELD_MASK_DESC"
+                        hint="+7 (999) 999-99-99"
+                        >
+                </field>
+                <field
+                type="text"
+                name="simplecallback_city_field_label"
+                label="Впишите город 1"
+                description="Задайте имя города для radio элемента"
+                default=""
+                >
+                </field>
+                <field
+                type="text"
+                name="simplecallback_city_field_labe2"
+                label="Впишите город 2"
+                description="Задайте имя города для radio элемента"
+                default=""
+                >
+                </field>
+                <field
+                type="text"
+                name="simplecallback_city_field_labe3"
+                label="Впишите город 3"
+                description="Задайте имя города для radio элемента"
+                default=""
+                >
+                </field>
+                <field
+                        type="radio"
+                        name="namemod_enabled"
+                        label="Включить поле Имя"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="telmod_enabled"
+                        label="Включить поле телефон"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="city_enabled"
+                        label="Включить поле города"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="simplecallback_message"
+                        label="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_LABEL"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_message_field_label"
+                        label="MOD_SIMPLECALLBACK_MESSAGE_FIELD_LABEL"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_FIELD_LABEL_DESC"
+                        default="MOD_SIMPLECALLBACK_MESSAGE_FIELD"
+                        translate_default="true"
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_submit_field_label"
+                        label="MOD_SIMPLECALLBACK_SUBMIT_FIELD_LABEL"
+                        description="MOD_SIMPLECALLBACK_SUBMIT_FIELD_LABEL_DESC"
+                        default="MOD_SIMPLECALLBACK_SUBMIT_FIELD"
+                        translate_default="true"
+                        >
+                </field>
+                <field type="spacer" name="myspacer2" class="text" label="MOD_SIMPLECALLBACK_EMAIL_PARAMS" />
+                <field
+                        type="text"
+                        name="simplecallback_emails"
+                        label="MOD_SIMPLECALLBACK_RECEPIENTS_EMAILS_LABEL"
+                        description="MOD_SIMPLECALLBACK_RECEPIENTS_EMAILS_DESC"
+                        default=""
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_email_subject"
+                        label="MOD_SIMPLECALLBACK_EMAIL_SUBJECT"
+                        description="MOD_SIMPLECALLBACK_EMAIL_SUBJECT_DESC"
+                        default="MOD_SIMPLECALLBACK_EMAIL_SUBJECT_DEFAULT"
+                        translate_default="true"
+                        >
+                </field>
+                <field type="spacer" name="myspacer3" class="text" label="MOD_SIMPLECALLBACK_AJAX_MESSAGES" />
+                <field
+                        type="textarea"
+                        rows="3"
+                        name="simplacallback_ajax_success_msg"
+                        label="MOD_SIMPLECALLBACK_AJAX_MSG_SUCCESS_LABEL"
+                        default="MOD_SIMPLECALLBACK_AJAX_MSG_SUCCESS_DEFAULT"
+                        translate_default="true"
+                        >
+                </field>
+                <field
+                        type="textarea"
+                        rows="3"
+                        name="simplacallback_ajax_error_msg"
+                        label="MOD_SIMPLECALLBACK_AJAX_MSG_ERROR_LABEL"
+                        default="MOD_SIMPLECALLBACK_AJAX_MSG_ERROR_DEFAULT"
+                        translate_default="true"
+                        >
+                </field>
+                <field type="spacer" name="myspacer4" class="text" label="MOD_SIMPLECALLBACK_SMSRU_INTEGRATION" />
+                <field
+                        type="radio"
+                        name="simplecallback_smsru_enable"
+                        label="MOD_SIMPLECALLBACK_SMSRU_ENABLE_LABEL"
+                        description="MOD_SIMPLECALLBACK_SMSRU_ENABLE_DESC"
+                        default="0"
+                                                 class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="simplecallback_smsru_test"
+                        label="Имитировать отправку (отладка)"
+                        description="Имитирует отправку сообщения для тестирования ваших программ на правильность обработки ответов сервера. При этом само сообщение не отправляется и баланс не расходуется."
+                        default="0"
+                                                 class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="simplecallback_smsru_translit"
+                        label="Транслитизировать"
+                        description="Переводит кирилицу в транслит"
+                        default="0"
+                                                 class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_smsru_api_id"
+                        label="MOD_SIMPLECALLBACK_SMSRU_API_ID_LABEL"
+                        description="MOD_SIMPLECALLBACK_SMSRU_API_ID_DESC"
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_smsru_phone"
+                        label="MOD_SIMPLECALLBACK_SMSRU_PHONE_LABEL"
+                        description="MOD_SIMPLECALLBACK_SMSRU_PHONE_DESC"
+                        >
+                </field>
+            </fieldset>
+            <fieldset name="advanced">
+                <field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+                <field
+                        name="moduleclass_sfx"
+                        type="textarea" rows="3"
+                        label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                        description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+                <field
+                        name="layout"
+                        type="modulelayout"
+                        label="JFIELD_ALT_LAYOUT_LABEL"
+                        description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
