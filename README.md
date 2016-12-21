@@ -3,6 +3,8 @@
 
 ## Мои релизы: https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/releases
 
+## Демо: http://stirrem.ru/
+
 # Скриншоты:
 
 ![215857](https://cloud.githubusercontent.com/assets/1074710/21390161/7a26f276-c796-11e6-983c-635cb9e070c2.png)
