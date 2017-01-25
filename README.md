@@ -8,6 +8,4 @@
 
 # Скриншоты:
 
-![215857](https://cloud.githubusercontent.com/assets/1074710/21390161/7a26f276-c796-11e6-983c-635cb9e070c2.png)
-![215910](https://cloud.githubusercontent.com/assets/1074710/21390162/7a40f518-c796-11e6-9a8c-38e5c9e697f3.png)
-
+![215857](http://img-fotki.yandex.ru/get/227342/77677229.84/0_aa05b_e6e92f7a_orig.png)
