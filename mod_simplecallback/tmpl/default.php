@@ -7,12 +7,16 @@ $menu = $app->getMenu()->getActive()->id;
 $document = JFactory::getDocument();
 $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/simplecallback.css');
 $document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.js');
+$document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/sweetalert.css');
+$document->addScript(JUri::base() . 'media/mod_simplecallback/js/sweetalert.min.js');
 JHTML::_('behavior.formvalidation');
 $overlayed = $params->get('simplecallback_overlay');
 $namemod_enabled = $params->get('namemod_enabled', 0);
 $telmod_enabled = $params->get('telmod_enabled', 0);
+$emailclient_enabled = $params->get('emailclient_enabled', 0);
 $city_enabled = $params->get('city_enabled', 0);
 $message_enabled = $params->get('simplecallback_message', 0);
+$simplecallback_file_enabled = $params->get('simplecallback_file_enabled', 0);
 $captcha_enabled = $params->get('simplecallback_captcha', 0);
 $phone_mask = $params->get('simplecallback_phone_field_mask');
 $simplecallback_city_field_label = trim($params->get('simplecallback_city_field_label'));
@@ -23,7 +27,7 @@ $header_class = $params->get('header_class', '');
 $show_title = $module->showtitle;
 ?>
 
-  <form id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="form-inline simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
+  <form enctype="multipart/form-data" id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="form-inline simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
   "; } ?>" method="post" <?php if (!empty($phone_mask) && $phone_mask !='' ) { echo "data-simplecallback-phone-mask='$phone_mask'"; } ?>
     data-simplecallback-form
     <?php if ($overlayed == 1) { echo "data-simplecallback-form-overlayed style='display: none;'"; } ?>
@@ -39,11 +43,31 @@ $show_title = $module->showtitle;
 } ?>
           <?php endif; ?>
 
+
     <?php if ($namemod_enabled == 1) : ?>
             <div class="control-group">
               <label>
                 <?php echo $params->get('simplecallback_name_field_label'); ?>
                   <input type="text" name="simplecallback_name" required class="input-block-level" autocomplete="off" />
+              </label>
+            </div>   
+          <?php endif; ?>
+
+    <?php if ($emailclient_enabled == 1) : ?>
+            <div class="control-group">
+              <label>
+                <?php echo $params->get('simplecallback_emailclient_field_label'); ?>
+                  <input type="text" name="simplecallback_emailclient"  class="input-block-level" autocomplete="off" />
+              </label>
+            </div>   
+          <?php endif; ?>
+          
+
+          <?php if ($simplecallback_file_enabled == 1) : ?>
+           <div class="control-group">
+              <label>
+               <?php echo $params->get('simplecallback_file_field_label'); ?>
+               <input type="file" name="simplecallback_file" />
               </label>
             </div>   
           <?php endif; ?>
@@ -60,6 +84,7 @@ $show_title = $module->showtitle;
             <?php if ($city_enabled == 1) : ?>
             <div class="control-group city">
               <label>Район:</label>
+              <div class="clearfix"></div>
               <label>
  <?php           
  if (!empty($simplecallback_city_field_label)) : ?>
@@ -100,7 +125,7 @@ $show_title = $module->showtitle;
                 <textarea type="text" name="simplecallback_message" class="input-block-level" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
-
+              
                     <div class="control-group">
                       <input type="text" name="simplecallback_username" class="simplecallback-username" maxlength="10">
                       <?php echo JHtml::_( 'form.token' ); ?>

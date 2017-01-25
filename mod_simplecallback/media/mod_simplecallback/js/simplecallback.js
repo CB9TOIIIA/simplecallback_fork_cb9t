@@ -231,8 +231,16 @@
             $.ajax({
                 type: "POST",
                 url: actionUrl,
-                data: form.serialize(),
+               // data: form.serialize(),
                 dataType: 'json',
+                accepts: {
+                    text: "application/json"
+                },
+                data:  new FormData(this),
+                async: false,
+                cache: false,
+                contentType:false,
+                processData:false,
                 success: function(data) {
                     if(data.error === false) {
                         swal({
