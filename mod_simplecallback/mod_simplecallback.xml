@@ -113,72 +113,29 @@
                 default=""
                 >
                 </field>
-                <field
+                 
+                   <field
                         type="radio"
-                        name="namemod_enabled"
-                        label="Включить поле Имя"
-                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
-                        default="0"
-                         class="btn-group btn-group-yesno"
-                        >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field
-                        type="radio"
-                        name="emailclient_enabled"
-                        label="Включить поле Email"
+                        name="simplecallback_rating_enabled"
+                        label="Включить рейтинг"
                         description=""
                         default="0"
-                         class="btn-group btn-group-yesno"
+                        class="btn-group btn-group-yesno"
                         >
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
-                </field>
+
+                </field> 
+                
                 <field
-                        type="radio"
-                        name="telmod_enabled"
-                        label="Включить поле Телефон"
-                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
-                        default="0"
-                         class="btn-group btn-group-yesno"
-                        >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
+                type="text"
+                name="simplecallback_rating_field_label"
+                label="Впишите label рейтинга"
+                description=""
+                default=""
+                >
                 </field>
-                <field
-                        type="radio"
-                        name="city_enabled"
-                        label="Включить поле Города"
-                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
-                        default="0"
-                         class="btn-group btn-group-yesno"
-                        >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field
-                        type="radio"
-                        name="simplecallback_message"
-                        label="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_LABEL"
-                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
-                        default="0"
-                         class="btn-group btn-group-yesno"
-                        >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
-                <field
-                        type="radio"
-                        name="simplecallback_file_enabled"
-                        label="Включить поле Файлы"
-                        description=""
-                        default="0"
-                         class="btn-group btn-group-yesno"
-                        >
-                    <option value="0">JNO</option>
-                    <option value="1">JYES</option>
-                </field>
+
                 <field
                         type="text"
                         name="simplecallback_message_field_label"
@@ -234,6 +191,41 @@
                         translate_default="true"
                         >
                 </field>
+                <field
+                        type="textarea"
+                        rows="3"
+                        name="simplacallback_ajax_error_captcha_msg"
+                        label="Неверная recaptcha"
+                        default="Неверная captcha! Пожалуйста, попробуйте снова!"
+                        translate_default="true"
+                        >
+                </field>
+                             <field
+                        type="radio"
+                        name="simplecallback_mail_enabled"
+                        label="Отключить отправку почты"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                
+                
+                  <field
+                        type="radio"
+                        name="simplecallback_recaptcha_enabled"
+                        label="Включить капчу"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+
+                </field> 
+              
                 <field type="spacer" name="myspacer4" class="text" label="MOD_SIMPLECALLBACK_SMSRU_INTEGRATION" />
                 <field type="spacer" name="myspacer5" class="text" label="&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAARCAMAAAAc0/kUAAAAb1BMVEVMaXGUxEEAVvQAVvQAVvQAVvQAVvQAVvSUxEEAVvSUxEEAVvQAVvQAVvSUxEGUxEGUxEEAVvQAVvQAVvSUxEGUxEGUxEEAVvSUxEGUxEGUxEGUxEGUxEEAVvSUxEF2pPkpcfaSt/qRwkcAVvSUxEFpjIJ0AAAAI3RSTlMAQCCfMEDff3/v7xDPjxAgcGBQr1Bgv7/fnzCvj3DPEEBAQItL8rkAAAGhSURBVHjavVTZgoMwCESN1vuo9aztHu3/f+MmBHLYPO+8hJDJgAQEwvXiIAZI0RDuYRokQpR76NjVK/ZNWwiRvVzIuyMaxSAPq0R7r0FiW749lDLKXRl3JfwkS10tvKu1dLFnAFGTWQWJ2/uEHADjqvw79EwYBGUsGlktu2HdJUj8fZ8xQ4SrqttkLKguPoR6kg+kQWKfnzHRKzlP8m9YbAGKUeC38d45CRJV/U+4gV7k2U6WQuKJqcsDmgnJ4TIGiKhzwhNuuKrDHq1WWlrSImO1Ag8yoaWHIBHyU4xyh8O07awbQaPxOlNmmFHuoqgrvXnFASIPgsUq0165gVtqaQ8PfTcFYXKXOnpTB4jfPAhbpLDq2nTctlS33Q+SUhASiV3FJkD84UGIwOQdadcKPKelNNyRyHiyFzf3hSJ/Er/kD4R1OB65ZtN4mz/uZrIrL3ftDRF9nY2+YPZfaQqNRBHDlXJXoM0YInLVJzswB/WtRUci5+5v0ODOQ/cjSITDDsLOr9w+/bH5nMQkBtPACG7gIBFWOwiHee+2dyp2KM8fY3SAdJh1/SwAAAAASUVORK5CYII=&quot; alt=&quot;joomla.sms.ru&quot;&gt; &amp;nbsp;  &lt;b&gt;Регистрация: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://joomla.sms.ru/&quot;&gt;www.Joomla.SMS.ru&lt;/a&gt;  —  &lt;b&gt;10% скидка&lt;/b&gt;" />
                 <field
@@ -335,6 +327,201 @@
                         >
                 </field>
 
+
+<field type="spacer" name="myspacer21" class="text" label="&lt;br&gt;&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ8AAAAyCAMAAAB1R/niAAAC+lBMVEX//v////9FM0PkqihGM0PRAGRLyZJ509xHNUVJNkdDMUEoFCYmEiQ9KjsjECFFM0QkESIxHjArGCkvHC0/LT0bCRk1JDO+AA9cTlsgDR4non54bHc6JziQh48tGiw7KjlBL0BjVWJojyA2CDkzITLenAgpFyciDiA4JjZnWWbKAVPUAGaUjJSfl54EAAMywYOooaiup63s6uz69/nPAF5gUl+0rbT18vTHAEeIgIeNg4y5srnDvcL7+vv+//8eCx1QQU9sYGp8cXuCdoGjm6Pg2+C2AAZVR1RZS1ggnHlJypHkqCFhy9W9tr3c2Nzl4OTn9vj0+/uGfIVDyI7dlwFr0Npz0dv//v0wHy29AQlKO0kdmXCakpk8xYripBJnzNeq48y46e/++/4xACrKAEvUAm9vZG9yZnErvn5Rz5jSztLY1Nfn5efv7fD38/cRARAWAhgnCDRNPUzpAGlihAVcjB8loX0hunpwz9X2ry151OCB0trou1F73PHJxcnNyMzU0NSq4+vEADdFw4/ipBpaydThrjlP6aN30tvp0ZfR8PD45r799+X7//+8AALBACDSKHbjaaJry6ds1KrqviuT2d+K3e3ysNDRytHrv9X42Or55PLe9+42ATR9C0vcAGM2WFlSih3YPIpqixTVTIzUYx1Ll38wrYM8r5hXxJlPzZV3uZTjkLh8067poMh/1+WP2LmC2ubtyC3nwnyj3eTwy3fz35kdBzAwCjioAVe/AEnAIgnVF3XOOhtWgQhkjyJ6kiJwn1I4uImcmiQzy4fFpCfifbFK1Zbknibrqyhzy8LnsS13zM3otSCM37994P3ww2fz3a/M7N327dtRBD0xGj2lAEbbAFC+E2gSk2tiix8mr3mYjwbdjiJVvbVZwbZW0J085Jb0pxRw1els2vfD8d/Y9vr8/tz8/fhDCkBICkBxB0xCYmTqNIhqkSRZmlYyrJhxplpgrYjHnhvfgYxfzqGPu6/hrSZoy8zLvmhe7q907rruv7up/94EVE87AAALMElEQVR42s2ZB1xT1xrAOdeASbgJmVciWdSQhJEQwgh7CMieskQEBQWZIk5U3HtU657VVmv7WrXVtrZ9r0O7997t615v7/3e7/e+c04WEOgvvlG+n7+Ye75zc/73+8437iFgLEFYAiasoIA3ru6auIDora0RERFrdqMbfboxjf9fcRiK31pTMqmkZs0NWhARuYFb0LhTPHN31EwCKYmgLq7Hd/qz1LqYGE3KUeQPXneKJibF1orGUGdiBM8C90dMwlLzIIyCinz6wRdqFUusuX49Uwrcskjei8a1rsd+lK9563d4uKqyCj794IvUMgyb4tctqSaGUQvsvm+BX5p78eJcD+Bbm0so4C5UtfOB1Su3b9jjH18Iw1b7xacRAx+vB/nWVu1fERu74kAVcrl7DRjwhcHBiL/Nu7eltLaudssDsJp/fLn+2Q/zCSvG4LtvRXFQUPGKV5HHwYODk5556uyyv345GUtdyzd+8IXL/eZLkQAfMwZfxo/mBIHM6cQGzMTTdz//h6euLbtt2dJ7XiN8q0rn/e/5dGPZr4/yBcV+DXocCpXzrj9+27Inbrpp6e+GVhFAv/mCp/vJx2NEonzffAH7YwnfwldxuFbOO1T71e+X3oTl7K9fHsJ4K2sr0fdnV9dFovTG+BRj8KG5C4sBr3jmZ3uq5h1aWdpSN/Tih2cJIHFwXemWccyHvIXmPylD+Eaqx7iLxMcwvhHzUe+mmUF3d9696aMXDwMc3m9D15dSvutDtaV1h3Z6Jo/Gy0hLzQlPjJxuSY/H0zx8dKWKMpslL66s3L0gHa4/mpRnyUs6Gg/fcX6hfE5tel5XhnfBuPh056Yn75z6wW/vnUxk+2v3EL4nHr/txcPzKtF4eHGNEpVRLteyJtmAxoFcfGEIvoI2UiSTmMSs0Rye5FUB7JrsBlZskgQ3ZFd3O/kU6nJEtXlKpaEgzIYbDWrMuR/dubyoaHnR1JVOwKGXPzz7BATwtY93YP14O6dfy4QwDA9EKFXq0pGbD2RdQRYrEjIMIxSKgpXtrcj1TDqlXE/G9dIsrSaD8pnLqcktSjVfz1kLMF09+GfnhpeLZi+fCjL708OUb9XQbx5fdu2pZ1764vXxmwrbIgWf4atlrJET8ngCa6oXX73FyDJ8hsH0DMMX9uc4fa5RNvBhhAiPr7ZWu+1H8XQCRqAqdJDJGRtWt7Ssumv2VMJ312Xi3trSr+75+JlJg4MvbC4ZrwtEDoUU8GSKnNyObJlEpNP1ePFlmFUChq+QSSSsVMhneML+OOJ0yyIRXPHMwRJWpga7Z9lcfFjbpAStQJUdT/CqVm+pnTz58CeUDxx8eXJtacvqDd84Br94YRJIxNXx+JJUPIYnj8wHKkd6WAOYj/CFUP8mZYUoTFxkjKW6MNgsgIkDsChab1IDgEjcGKZJydGrzGwkQjEmyufB66N78YEtOAFfXrm8iBrwky8BbucemPg6bWIi1owXHKnAp9M5EJWuFOhAvPhQh1U7fT3+Uh/H6XiMkMXbM1EM7jPLYnqxoqKJU1U4+cxdHjwHXTRjdS0pEJeJg5cXfXDXhp1VdLE3KJ/TwXjEB181rksispJzjocPUO3ta5FT8ljYayoNQmslEBh6NsmlKIcplM+QT/B4fILn4tuON9zhT2fjAL7zyU2YLhNHdvzWZtqlXkUu8WU/2EmGgjKHZ4aHb1gWtotEdFdWZ8EtbJjr1+gzNUH/pxD1JWHr8VUFxLlO/5J4vbe0qAjgOjtj56JMVxftcfCeY7fs23fLidGA6fC7jEAuy+6ISevGGKP57N1dXeWQhRs5htFGgnu1YD7t0WFPiyxiGGzsUAOekAvv86TmypVb6upaSus27I+FCgI9wgH3g+2KgC71pYNXXvnns/uikqOiNgYeRyP5WguzBDh1cMHiYK4wxg43e/HBP1sOY+Y4XXaubQDsJ09EfdBHMdxA3/Bq1wR8PEau4IMZjV5tTCaqPFS3/RCUiDdji4NAZs48SbXEwQevvPTTO36yNyoqEMvG29EowHydEn4Ui1ChzVKTXeXhWz+gZM0KhUJkYI04E0pDUY+Ocg7ns0gYt0jDA7yU0LBU4h+NdzZZC0mfT3xztRngZsyYsTc6mvBFJfjwsL1dmyXTQW7GqVben+adX9YbJXxQmGWshOVwRpYWOvnCR/DlUT6eWs9j+Epauz3v0uTjvoW0CTzg2jjH/4jhpkyZNStqAeFLSDjuK4a7NOGQg40ifggj0Op7PXwZAxLIJAZWkJOryc1WUz6HXscwhsLWEXwsBDXM1Yt4kMeVNm98+t3t4DknMdyJC+cCo6bMmoLl5o2ELzr5UV8vqCSLpVtyOBkfDGBK8vDFKSGVNehtdjyld4Aj/kUFBoYRmSuG89kwn0BSmN8hhpJjlnQhn10+fg15+l/oxKVzCcnzExZsvJny7Q2MBuvNTz4yOsUQ4xPpDm8IYXjiGIhQJ1+YGCfvfKLFXTXdd2ESeA5Tnld+cfFxjXZU0cDBQ8n0fSNXIg4ufm7bttjz5xYAHBhswXxsP+rgqOT5+y75wAvAFYEuE68Dz4k1zv4+DP7XwnUqvQnbjfLZcMo0m+2u8Xy8x+KATyhJQ9joPLCksmN0KL759LZtQefPvJP17pJAItGBeyngjL0Jj95yBG4e/VC51sJ0VyHgRGA/i+f9I1FOecnEtXI9jYteHcdjBMbG9c66osrBVMHAZyzDA5EmAd6CSWjULvrT7DPvtLWdeujWJdEUkDh41owZsx47Eu+7wK1ViYyyyLhyR7w9rZHjwxrrPHztLI9R6ysIRpnOwAe+SFzL+gUMuNCcW9Z91BYqNijBxElG4JOlYVf3YA/zDZzdO0RIibi1v61t2rRpi38eeNrJN/9mCODH7nj+4Lc+mwRS6/l6Y7Aou4AvaxDwBOJQr/c3C44PKd+Snm7LkRkEDK0fKL5RjAFF0FxxrDZEoF9kcfKV4UXAwziUs9q93wdOQIl4793FD08DeXjxI9TBCfOjCNyVVyIeHIMvdBFp7EScQS0Er8klXTgSnOcHvQoj5BeOlclYGc+sFgBfDg6nfAM8VQj02wqFMCREoAa+NA8feFgFU4XKNM/7wDGoXwmno99ePA3LQ79YEh0N4Zpw+6X7X7ly8C/4pKje96tfT2QWq+CF0EZYbwqmO8jJh9axYgaUQiFPoSpIhLwsyyHRWt6o5EJoA83XiyUQy2kyIRTldBoydgPeC0ZjtyvEHe8n4x235NaHCN/inyW8B3AXjiP0bXMJOQps3jXW0VJSuEEslsml8mCVLLybZJtsq0RsJf3f+gKxSiuVgqrd0WGVSKyhNPlnpOpNJq3BgDWJ62BimlUlUVnTnCGdtkgZLFdwcS6+Sz8mAbHkEeLgU21Zj/zq2eO0X1pDmxing0cLhrBV54SGJnbE4IUI8nRN6vS18BUvXB0eGtqOVWUpTU2pZa6sYo+rjiwsKGyPWUsyaI9GE6PR9Ljen/Kq49LzW93uvUD5ok+/vfhUW1ub/syf3b3cjhr3UeW47+f15NN7xP21lVy6Rz1TMuKJyscJ5IjLY5iPOLj/lOiX5zs///se131vRWwmfG98//nG8MvRF16DYyB56YYf796+EVqUqOTT758537lt23PFsV+7n+v+muaSzTVr6n/IPzYgx7nk5CgoEa3/+Pw590mRk30HvIK8/t0PiYfNdOwClAjXSVHQnM+qPHtp967dP/hfk1w78uSmmbTJ2uneGBPkT13O7bY/1tkETgAkX5RzV2ADrjiQOUH56i/CUf7CmRPUfOQw9cD++yonKt5/Fg+ZmQH/B8HVKmBiyL8Bsf6EmGMKzBcAAAAASUVORK5CYII=&quot; alt=&quot;Slack&quot;&gt; &lt;b&gt; &amp;nbsp;   Slack: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://my.slack.com/services/new/incoming-webhook/&quot;&gt;  Webhook integration Slack&lt;/a&gt; " />
+
+                       <field
+                        type="radio"
+                        name="simplecallback_slack_enabled"
+                        label="Присылать сообщение в Slack"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                <field
+                        type="text"
+                        name="simplecallback_slack_webhookurl"
+                        label="Slack webhookurl"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_slack_username"
+                        label="Username BOT Slack"
+                        description="Username BOT Slack"
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_slack_icon_emoji"
+                        label="icon_emoji BOT Slack"
+                        description="icon_emoji BOT Slack"
+                        >
+                </field>
+
+
+
+<field type="spacer" name="myspacer23" class="text" label="&lt;br&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt=&quot;Trello&quot;&gt; &lt;b&gt; &amp;nbsp;   Trello: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://developers.trello.com/sandbox/&quot;&gt;  Developers.Trello.com/sandbox&lt;/a&gt; " />
+
+                       <field
+                        type="radio"
+                        name="simplecallback_trello_enabled"
+                        label="Присылать сообщение в Trello"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                <field
+                        type="text"
+                        name="simplecallback_trello_key"
+                        label="Key Trello"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_trello_token"
+                        label="Token Trello"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_trello_idlist"
+                        label="ID List Trello"
+                        description=""
+                        >
+                </field>
+
+
+            </fieldset>
+            <fieldset name="required" label="Настройка  полей">
+ <field
+                        type="radio"
+                        name="namemod_enabled"
+                        label="Включить поле Имя"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="emailclient_enabled"
+                        label="Включить поле Email"
+                        description=""
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="telmod_enabled"
+                        label="Включить поле Телефон"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="city_enabled"
+                        label="Включить поле Города"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="simplecallback_message"
+                        label="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_LABEL"
+                        description="MOD_SIMPLECALLBACK_MESSAGE_ENABLE_DESC"
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field
+                        type="radio"
+                        name="simplecallback_file_enabled"
+                        label="Включить поле Файлы"
+                        description=""
+                        default="0"
+                         class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+   <field
+                        type="radio"
+                        name="simplecallback_name_field_label_req"
+                        label="Обазятельно поле Имени"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                
+   <field
+                        type="radio"
+                        name="simplecallback_emailclient_field_label_req"
+                        label="Обазятельно поле E-mail"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                
+   <field
+                        type="radio"
+                        name="simplecallback_phone_field_label_req"
+                        label="Обазятельно поле Телефона"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+   <field
+                        type="radio"
+                        name="simplecallback_message_req"
+                        label="Обазятельно поле Сообщения"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+
+  
             </fieldset>
             <fieldset name="advanced">
                 <field

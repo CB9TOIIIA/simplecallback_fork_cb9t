@@ -253,7 +253,7 @@
                         form[0].reset();
                         simplecallback.hide();
                   } else {
-                        swal({   title: "Ошибка!",   text: data.message,   timer: 3000,   showConfirmButton: false });
+                        swal({   title: "Ошибка!",   type: "warning",  text: data.message,   timer: 5000,   showConfirmButton: false });
                         //console.log(data.message);
                     }
                     

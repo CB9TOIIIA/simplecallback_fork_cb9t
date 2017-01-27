@@ -75,3 +75,75 @@
 .simplecallback-username {
     display: none !important;
 }
+
+#reviewStars-input input:checked ~ label, #reviewStars-input label, #reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAoCAMAAADNGvrUAAABj1BMVEVMaXHMysr/uwDMysrMysrMysr/uwDMysr/uwD/uwD/uwD/uwD/uwD/uwDMysrMysrMysr/uwDMysrMysr/uwDMysr/uwDMysr/uwDMysr/uwDMysr/uwDMysrMysrMysr/uwDMysrMysrMysr/uwDMysr/uwD/uwD/uwDMysr/uwD/uwDMysr/uwDMysr/uwDMysr/uwD/uwDMysr/uwDMysr/uwD/uwDMysr/uwD/uwDMysrMysrMysr/uwDMysrMysr/uwDMysrMysrMysrMysrMysrMysrMysrMysrMysrMysrMysrMysr/uwDMysr/uwDMysrMysrMysrMysrMysrMysrMysrMysn/uwD/uwD/uwD/uwD/uwDMysr/uwD/uwDNysf/uwDNysjNysfGzOHFzOf/uwD/uwDHzN7HzODIy9nKy9P/ugD/uAD/uwDMysvKy9H/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD/uwDMysr/uwDMysjMysmq+4DUAAAAgXRSTlMA+PioenR6kZF0A6hV5CtUfX8lz63UkxqdgaJn6mxS91R7gB59hSXP1H8agQNnrWyTUvede6KAHuqFMt8Bh0vorytmrjIIS28NVQy22uQNd3PIYMeOtxflY47aZuYX3HZgVeXk4nMMx29ldgN0tgx36+brh8jcZQi34q4M32MB6K/QgBtXAAABLElEQVR42m3R1XYCMRAG4AFKYaEtdXd3d2+pu7u7u/ukffBuOGROdpP/JpPvYjJJgDI2Pw6aTCPOqbq0jDgxovACmomwa4yDc2uKVSurMZQGkvhAmSspB8NxJDTlZRcAeFCTfHDrOAOgSNUs3jzNrm6uSvtYMUytEOuVhmQeIO6XeZS4S+ZhYpfMHuJZc/d3e3h282sWQaGDk4gHp+cARxf7iB2dwhe3dkW50tNrfdur40vdX14ztqPq5h5ja1MKrzIzkXbtc3LOLLeqL5GFkkpSnBvnL61n4ThL0hvrWgC8TJNmMHRcBdCmag1vXmFXg6vSvlAMkyzEeqVumduJ12WOIr6X+YTYL7OX+IFvN2a27/j6JvQ5mrHXJx/Au2FWH1/CXx7pnM/vH778A/Bz3OcJSVdYAAAAAElFTkSuQmCC') no-repeat;
+}
+
+#reviewStars-input {
+  
+  /*fix floating problems*/
+  overflow: hidden;
+  *zoom: 1;
+  /*end of fix floating problems*/
+  
+  position: relative;
+  float: left;
+}
+
+#reviewStars-input input {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  
+  /*width: 43px;
+  height: 40px;*/
+  width: 21px;
+  height: 20px;
+  
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}
+
+#reviewStars-input input:checked ~ label {
+  background-position: 0 -20px;
+  height: 20px;
+  width: 21px;
+}
+
+#reviewStars-input label {
+  background-position: 0 0;
+  height: 20px;
+  width: 21px;
+  float: right;
+  cursor: pointer;
+  margin-right: 10px;
+  
+  position: relative;
+  z-index: 1;
+}
+
+#reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
+  background-position: 0 -20px;
+  height: 20px;
+  width: 21px;
+}
+
+#reviewStars-input #star-0 {
+  left: 0px;
+}
+#reviewStars-input #star-1 {
+  left: 26px;
+}
+#reviewStars-input #star-2 {
+  left: 52px;
+}
+#reviewStars-input #star-3 {
+  left: 104px;
+}
+#reviewStars-input #star-4 {
+  left: 130px;
+}
+#reviewStars-input #star-5 {
+  left: 156px;
+}
