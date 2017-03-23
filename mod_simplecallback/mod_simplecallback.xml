@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.0" client="site" method="upgrade">
     <name>Simple Callback Module</name>
-    <author>Alexey Startler</author>
-    <authorEmail>info@startler.ru</authorEmail>
-    <authorUrl>https://github.com/birdkiwi/mod_simplecallback</authorUrl>
-    <version>1.5.0</version>
+    <author>Eugene Kopylov</author>
+    <authorEmail>cb9toiiia@gmail.com</authorEmail>
+    <authorUrl>https://github.com/CB9TOIIIA/simplecallback_fork_cb9t</authorUrl>
+    <version>1.1.1</version>
     <creationDate>24.02.2015</creationDate>
-    <description>MOD_SIMPLECALLBACK_GENERAL_DESC</description>
+ <description><![CDATA[SimpleCallBack - это продвинутый модуль формы обратной связи для CMS Joomla! <br> Возможность отправлять сообщения: на почту, Вконтакте, Slack, PushAll, Telegram, SMS, Callback - реальный обратный звонок через сервис Pozvonim и т.д.<br><br><iframe frameborder='0' allowtransparency='true' scrolling='no' src='https://tpv.sr/1QoBXDF/' width='510' height='315'></iframe>]]> </description>
     <files>
         <filename>mod_simplecallback.xml</filename>
         <filename module="mod_simplecallback">mod_simplecallback.php</filename>
@@ -225,7 +225,13 @@
                     <option value="1">JYES</option>
 
                 </field> 
-              
+     
+
+
+            </fieldset>
+            <fieldset name="crossposting" label="Кросспостинг">
+
+         
                 <field type="spacer" name="myspacer4" class="text" label="MOD_SIMPLECALLBACK_SMSRU_INTEGRATION" />
                 <field type="spacer" name="myspacer5" class="text" label="&lt;img src=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAARCAMAAAAc0/kUAAAAb1BMVEVMaXGUxEEAVvQAVvQAVvQAVvQAVvQAVvSUxEEAVvSUxEEAVvQAVvQAVvSUxEGUxEGUxEEAVvQAVvQAVvSUxEGUxEGUxEEAVvSUxEGUxEGUxEGUxEGUxEEAVvSUxEF2pPkpcfaSt/qRwkcAVvSUxEFpjIJ0AAAAI3RSTlMAQCCfMEDff3/v7xDPjxAgcGBQr1Bgv7/fnzCvj3DPEEBAQItL8rkAAAGhSURBVHjavVTZgoMwCESN1vuo9aztHu3/f+MmBHLYPO+8hJDJgAQEwvXiIAZI0RDuYRokQpR76NjVK/ZNWwiRvVzIuyMaxSAPq0R7r0FiW749lDLKXRl3JfwkS10tvKu1dLFnAFGTWQWJ2/uEHADjqvw79EwYBGUsGlktu2HdJUj8fZ8xQ4SrqttkLKguPoR6kg+kQWKfnzHRKzlP8m9YbAGKUeC38d45CRJV/U+4gV7k2U6WQuKJqcsDmgnJ4TIGiKhzwhNuuKrDHq1WWlrSImO1Ag8yoaWHIBHyU4xyh8O07awbQaPxOlNmmFHuoqgrvXnFASIPgsUq0165gVtqaQ8PfTcFYXKXOnpTB4jfPAhbpLDq2nTctlS33Q+SUhASiV3FJkD84UGIwOQdadcKPKelNNyRyHiyFzf3hSJ/Er/kD4R1OB65ZtN4mz/uZrIrL3ftDRF9nY2+YPZfaQqNRBHDlXJXoM0YInLVJzswB/WtRUci5+5v0ODOQ/cjSITDDsLOr9w+/bH5nMQkBtPACG7gIBFWOwiHee+2dyp2KM8fY3SAdJh1/SwAAAAASUVORK5CYII=&quot; alt=&quot;joomla.sms.ru&quot;&gt; &amp;nbsp;  &lt;b&gt;Регистрация: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://joomla.sms.ru/&quot;&gt;www.Joomla.SMS.ru&lt;/a&gt;  —  &lt;b&gt;10% скидка&lt;/b&gt;" />
                 <field
@@ -298,6 +304,45 @@
                         >
                 </field>
                  
+
+<field type="spacer" name="myspacer293" class="text" label="&lt;br&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt=&quot;pozvonim&quot;&gt; &lt;b&gt; &amp;nbsp;   Pozvonim: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://pozvonim.com/?i=706417665&quot;&gt;  Регистрация в Pozvonim.com &lt;/a&gt; &lt;b&gt; +1000 руб. на счет&lt;/b&gt;  " />
+
+                       <field
+                        type="radio"
+                        name="simplecallback_pozvonim_enabled"
+                        label="Включить Callback pozvonim (сразу перезвонить клиенту)"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                <field
+                        type="text"
+                        name="simplecallback_pozvonim_key"
+                        label="API key pozvonim"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_pozvonim_uid"
+                        label="uid pozvonim"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_pozvonim_siteid"
+                        label="ID сайта"
+                        description=""
+                        >
+                </field>
+
+
                  <field type="spacer" name="myspacer7" class="text" label="&lt;br&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt=&quot;pushall&quot;&gt; &lt;b&gt; &amp;nbsp;   Pushall: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://pushall.ru/admin&quot;&gt; Регистрация в Pushall&lt;/a&gt;" />
                                
                        <field
@@ -405,7 +450,95 @@
                 </field>
 
 
-            </fieldset>
+
+<field type="spacer" name="myspacer26" class="text" label="&lt;br&gt;&lt;img src=&quot;data:image/png;base64,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&quot; alt=&quot;VK&quot;&gt; &lt;b&gt; &amp;nbsp;   VK: &lt;/b&gt;   &lt;a target=&quot;_blank&quot; href=&quot;https://oauth.vk.com/authorize?client_id=3087106&amp;scope=notify,friends,photos,audio,video,docs,notes,messages,pages,status,wall,groups,notifications,stats,questions,offers,offline&amp;redirect_uri=blank.html&amp;display=page&amp;response_type=token&quot;&gt; Получить access_token VK&lt;/a&gt; " />
+
+                       <field
+                        type="radio"
+                        name="simplecallback_vk_enabled"
+                        label="Присылать сообщение в VK"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+                <field
+                        type="text"
+                        name="simplecallback_vk_access_token"
+                        label="ACCESS_TOKEN VK"
+                        description=""
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_vk_group_id"
+                        label="ID группы (group_id) VK"
+                        description=""
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_vk_topic_id"
+                        label="ID поста (topic_id) VK"
+                        description=""
+                        >
+                </field>
+
+                <field
+                        type="text"
+                        name="simplecallback_vk_filter"
+                        label="Фильтрация"
+                        default="owner"
+                        description=""
+                        >
+                </field>
+                <field
+                        type="text"
+                        name="simplecallback_vk_sort"
+                        label="Сортировка"
+                        default="desc"
+                        description=""
+                        >
+                </field>
+               <field
+                        type="radio"
+                        name="simplecallback_vk_from_group"
+                        label="Постинг от лица группы"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+               <field
+                        type="radio"
+                        name="simplecallback_vk_board_comment"
+                        label="Постинг в обсуждениях"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+               <field
+                        type="radio"
+                        name="simplecallback_vk_wall_post"
+                        label="Постинг на стене группы"
+                        description=""
+                        default="0"
+                        class="btn-group btn-group-yesno"
+                        >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+
+</fieldset>
+
             <fieldset name="required" label="Настройка  полей">
  <field
                         type="radio"
@@ -523,7 +656,7 @@
 
   
             </fieldset>
-            <fieldset name="advanced">
+ <fieldset name="advanced">
                 <field
 					name="layout"
 					type="modulelayout"
@@ -542,4 +675,6 @@
             </fieldset>
         </fields>
     </config>
+<updateservers><server type="extension" priority="1" name="mod_simplecallback">https://raw.githubusercontent.com/CB9TOIIIA/simplecallback_fork_cb9t/master/updatemysimplecallback.xml</server></updateservers>
 </extension>
+

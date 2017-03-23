@@ -1,14 +1,5 @@
 <?php
-/**
-* Helper class for Simple Callback module
-*
-* @link http://startler.ru/joomla/
-* @license        GNU/GPL, see LICENSE.php
-* mod_simplecallback is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-*/
+
 class modSimpleCallbackHelper
 {
     public static function getAjax()
@@ -55,19 +46,19 @@ class modSimpleCallbackHelper
         $recipients = !empty($recipients_array) && !empty($recipients_array[0]) ? $recipients_array : array($config->get('mailfrom'), $config->get('fromname'));
         $subject = $params->get('simplecallback_email_subject');
         $client_ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
-        $phone = strip_tags($data['simplecallback_phone']);
-        $name = strip_tags($data['simplecallback_name']);
-        $emailclient = strip_tags($data['simplecallback_emailclient']);
+        if(isset($data['simplecallback_phone'])) { $phone = strip_tags($data['simplecallback_phone']); } else { $phone = null;}
+        if(isset($data['simplecallback_name'])) {$name = strip_tags($data['simplecallback_name']); } else { $name = null;}
+        if(isset($data['simplecallback_emailclient'])) { $emailclient = strip_tags($data['simplecallback_emailclient']);} else { $emailclient = null;}
         $recaptcha_enabled = $params->get('simplecallback_recaptcha_enabled', 0);
-        $message = strip_tags($data['simplecallback_message']);
-        $page_title = strip_tags($data['simplecallback_page_title']);
-        $custom_data = strip_tags($data['simplecallback_custom_data']);
-        $reviewStars = strip_tags($data['reviewStars']);
+        if(isset($data['simplecallback_message'])) {  $message = strip_tags($data['simplecallback_message']);} else { $message = null;}
+        if(isset($data['simplecallback_page_title'])) {  $page_title = strip_tags($data['simplecallback_page_title']);} else { $page_title = null;}
+        if(isset($data['simplecallback_custom_data'])) { $custom_data = strip_tags($data['simplecallback_custom_data']);} else { $custom_data = null;}
+        if(isset($data['reviewStars'])) {  $reviewStars = strip_tags($data['reviewStars']);} else { $reviewStars = null;}
         $rating_enabled = $params->get('simplecallback_rating_enabled', 0);
-        $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);
-        $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);
-        $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);
-        $page_url = strip_tags($data['simplecallback_page_url']);
+        if(isset($data['simplecallback_city_field_label'])) { $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);  } else { $simplecallback_city_field_label = null;}
+        if(isset($data['simplecallback_city_field_labe2'])) { $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);   } else { $simplecallback_city_field_labe2 = null;}
+        if(isset($data['simplecallback_city_field_labe3'])) { $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);   } else { $simplecallback_city_field_labe3 = null;}
+        if(isset($data['simplecallback_page_url'])) { $page_url = strip_tags($data['simplecallback_page_url']);   } else { $page_url = null;}
         $body = "\n";
         if(!empty($name)) :     $body .= "\n". $params->get('simplecallback_name_field_label') . ": "  . $name; endif;
         if(!empty($phone)) :    $body .= "\n". $params->get('simplecallback_phone_field_label') . ": "  . $phone; endif;
@@ -82,6 +73,7 @@ class modSimpleCallbackHelper
         $telegram_enabled = $params->get('simplecallback_telegram_enabled');
         $pushall_enabled = $params->get('simplecallback_pushall_enabled');
         $trello_enabled = $params->get('simplecallback_trello_enabled');
+        $vk_enabled = $params->get('simplecallback_vk_enabled');
         $mail_enabled = $params->get('simplecallback_mail_enabled');
         $slack_enabled = $params->get('simplecallback_slack_enabled');
         $smsru_translit = $params->get('simplecallback_smsru_translit');
@@ -95,6 +87,20 @@ class modSimpleCallbackHelper
         $trello_key = $params->get('simplecallback_trello_key');
         $trello_token = $params->get('simplecallback_trello_token');
         $trello_idlist = $params->get('simplecallback_trello_idlist');
+        $pozvonim_enabled = $params->get('simplecallback_pozvonim_enabled');
+        $pozvonim_key = $params->get('simplecallback_pozvonim_key');
+        $pozvonim_uid = $params->get('simplecallback_pozvonim_uid');
+        $pozvonim_siteid = $params->get('simplecallback_pozvonim_siteid');
+        $vk_access_token = $params->get('simplecallback_vk_access_token');
+        $vk_group_id = $params->get('simplecallback_vk_group_id');
+        $vk_topic_id = $params->get('simplecallback_vk_topic_id');
+        $vk_count = $params->get('simplecallback_vk_count', 1);
+        $vk_offset = $params->get('simplecallback_vk_offset', 1);
+        $vk_filter = $params->get('simplecallback_vk_filter');
+        $vk_sort = $params->get('simplecallback_vk_sort');
+        $vk_from_group = $params->get('simplecallback_vk_from_group');
+        $vk_board_comment = $params->get('simplecallback_vk_board_comment');
+        $vk_wall_post = $params->get('simplecallback_vk_wall_post');
         $slack_username = $params->get('simplecallback_slack_username','SimpleCallbackBot');
         $slack_icon_emoji = $params->get('simplecallback_slack_icon_emoji',':rabbit:');
         $datemsg = date('d.m.Y H:i');
@@ -179,6 +185,51 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $telegram_request_url = 'https://telegram.cb9t.ru/modsimplecallbackbot/fromweb.php?chatid=' . $telegram_chat_id . '&text=' . $telegram_text;
                 $telegram_result = file_get_contents($telegram_request_url);
             }
+       
+           if ($pozvonim_enabled === '1' && !empty($pozvonim_key)) {
+                $Tokenurl = 'https://api.pozvonim.com/v2u/auth/token?';
+                $ProfileUrl = 'https://api.pozvonim.com/v2u/profile?';
+                $rephone = urlencode($phone);
+                $InputVars = [
+                'uid'  => $pozvonim_uid,
+                'sign' => md5("{$pozvonim_key}uid={$pozvonim_uid}")
+                ];
+                $ToketGet = $Tokenurl.http_build_query($InputVars,null,'&');
+                $getprofile = json_decode(file_get_contents($ToketGet));
+                $getprofilear = json_decode(json_encode($getprofile), true);
+                $Token = $getprofilear['token'];
+                $TokenExpire = $getprofilear['expire'];
+                $VarsGET = md5("{$Token}uid={$pozvonim_uid}");
+                $VarsGETnoMD5 = "{$Token}uid={$pozvonim_uid}";
+                $GETVars = [
+                'uid'  => $pozvonim_uid,
+                'sign' => $VarsGET
+                ];
+                $VarsGETPhone = md5("{$Token}phone={$rephone}&uid={$pozvonim_uid}");
+                $VarsGETPhonenoMD5 = "{$Token}phone={$rephone}&uid={$pozvonim_uid}";
+                $GETVarsCall = [
+                'phone'  => $phone,
+                'uid'  => $pozvonim_uid,
+                'sign' => $VarsGETPhone
+                ];
+                $POZVONIM_Post_Call = "https://api.pozvonim.com/v2u/sites/{$pozvonim_siteid}/call?";
+                $dataCall = array(
+                "phone" => $phone,
+                "uid" =>  $pozvonim_uid,
+                "sign" => $VarsGETPhone
+                );
+                $jsondataCall = json_encode($dataCall);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $POZVONIM_Post_Call);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondataCall);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+                $resultPostCall = curl_exec($ch);
+                curl_close($ch);
+            }
 
             if ($pushall_enabled === '1' && !empty($pushall_id)) {
                 $pushall_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . "\n" . $message);
@@ -206,6 +257,44 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
                 $slack_result = curl_exec($ch);
                 curl_close($ch);
+            }
+          
+		    if ($vk_enabled === '1' && !empty($vk_access_token)) {
+
+                function vkpush($method, $post = false) {
+                $ch = curl_init("https://api.vk.com/method/".$method);
+                curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+                curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+                if ($post) {
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+                }
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $json = json_decode($response, true);
+                if (isset($json["error"]["error_msg"])) {
+                    return $json["error"];
+                    } 
+                else {
+                    return $json["response"];
+                    }           
+                }
+                
+				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . "\n" . $message;
+
+                if ($vk_wall_post === '1') {
+
+                vkpush('wall.post', array('owner_id' => '-'.$vk_group_id,  'from_group' => $vk_from_group, 'message' => $vk_message,  'access_token' => $vk_access_token));
+
+                }
+                
+                if ($vk_board_comment === '1') {
+
+                vkpush("board.createComment", array("group_id" => $vk_group_id, "topic_id" => $vk_topic_id, "message" => $vk_message,  "from_group" => $vk_from_group,  "access_token" => $vk_access_token));
+
+                }
+
             }
 
             if ($trello_enabled === '1' && !empty($trello_key) && !empty($trello_token) && !empty($trello_idlist)) {
