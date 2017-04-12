@@ -69,6 +69,7 @@ class modSimpleCallbackHelper
         if(!empty($simplecallback_city_field_labe3)) :  $body .= "\n" .  $simplecallback_city_field_labe3;  endif;
         if(!empty($rating_enabled)) :  $body .= "\n" . $params->get('simplecallback_rating_field_label') . ": " . $reviewStars; endif;
         if(!empty($message)) :  $body .= "\n" . $params->get('simplecallback_message_field_label') . ": " . $message; endif;
+        if(!empty($page_title)) { $message .= "\n" . $page_title . "\n \n" . $page_url; }
         $smsru_enable = $params->get('simplecallback_smsru_enable');
         $telegram_enabled = $params->get('simplecallback_telegram_enabled');
         $pushall_enabled = $params->get('simplecallback_pushall_enabled');

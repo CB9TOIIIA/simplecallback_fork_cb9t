@@ -39,7 +39,10 @@ $zv_name_req = ($name_req == 'required') ? '<span style="needreq">*</span>' : ''
 $zv_emailclient_req = ($emailclient_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_phone_req = ($phone_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>' : '' ;
-
+$cleartitle = str_replace('"', '',  $document->getTitle()); // удаляем одинарные кавычки
+$cleartitle = str_replace("'", "", $cleartitle); // удаляем одинарные кавычки
+$cleartitle = str_replace('&quot;', '', $cleartitle); // удаляем двойные кавычки
+$cleartitle = str_replace('&amp;', '', $cleartitle); // удаляем амперсанд
 ?>
 
   <form enctype="multipart/form-data" id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="form-inline simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
@@ -174,7 +177,7 @@ $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>
                       <?php echo JHtml::_( 'form.token' ); ?>
                         <input type="hidden" name="module_id" value="<?php echo $module->id; ?>" />
                         <input type="hidden" name="Itemid" value="<?php echo $menu; ?>">
-                        <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
+                        <input type="hidden" name="simplecallback_page_title" value="<?php echo $cleartitle; ?>">
                         <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
                         <input type="hidden" name="simplecallback_custom_data" value="">
                         <button type="submit" class="uk-button uk-width-1-1 button21">
