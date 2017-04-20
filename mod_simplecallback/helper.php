@@ -55,6 +55,8 @@ class modSimpleCallbackHelper
         if(isset($data['simplecallback_custom_data'])) { $custom_data = strip_tags($data['simplecallback_custom_data']);} else { $custom_data = null;}
         if(isset($data['reviewStars'])) {  $reviewStars = strip_tags($data['reviewStars']);} else { $reviewStars = null;}
         $rating_enabled = $params->get('simplecallback_rating_enabled', 0);
+        $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
+        if(isset($data['zakonrf'])) {  $zakonrf = strip_tags($data['zakonrf']);} else { $zakonrf = null;}
         if(isset($data['simplecallback_city_field_label'])) { $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);  } else { $simplecallback_city_field_label = null;}
         if(isset($data['simplecallback_city_field_labe2'])) { $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);   } else { $simplecallback_city_field_labe2 = null;}
         if(isset($data['simplecallback_city_field_labe3'])) { $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);   } else { $simplecallback_city_field_labe3 = null;}
@@ -69,7 +71,6 @@ class modSimpleCallbackHelper
         if(!empty($simplecallback_city_field_labe3)) :  $body .= "\n" .  $simplecallback_city_field_labe3;  endif;
         if(!empty($rating_enabled)) :  $body .= "\n" . $params->get('simplecallback_rating_field_label') . ": " . $reviewStars; endif;
         if(!empty($message)) :  $body .= "\n" . $params->get('simplecallback_message_field_label') . ": " . $message; endif;
-        if(!empty($page_title)) { $message .= "\n" . $page_title . "\n \n" . $page_url; }
         $smsru_enable = $params->get('simplecallback_smsru_enable');
         $telegram_enabled = $params->get('simplecallback_telegram_enabled');
         $pushall_enabled = $params->get('simplecallback_pushall_enabled');

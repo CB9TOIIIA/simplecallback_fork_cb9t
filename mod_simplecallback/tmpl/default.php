@@ -10,6 +10,9 @@ $document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.
 $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/sweetalert.css');
 $document->addScript(JUri::base() . 'media/mod_simplecallback/js/sweetalert.min.js');
 JHTML::_('behavior.formvalidation');
+$zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
+$zakonrf_link_text = $params->get('simplacallback_zakonrf_link_text');
+$zakonrf_link = $params->get('simplacallback_zakonrf_link');
 $overlayed = $params->get('simplecallback_overlay');
 $namemod_enabled = $params->get('namemod_enabled', 0);
 $telmod_enabled = $params->get('telmod_enabled', 0);
@@ -39,10 +42,7 @@ $zv_name_req = ($name_req == 'required') ? '<span style="needreq">*</span>' : ''
 $zv_emailclient_req = ($emailclient_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_phone_req = ($phone_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>' : '' ;
-$cleartitle = str_replace('"', '',  $document->getTitle()); // удаляем одинарные кавычки
-$cleartitle = str_replace("'", "", $cleartitle); // удаляем одинарные кавычки
-$cleartitle = str_replace('&quot;', '', $cleartitle); // удаляем двойные кавычки
-$cleartitle = str_replace('&amp;', '', $cleartitle); // удаляем амперсанд
+
 ?>
 
   <form enctype="multipart/form-data" id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="form-inline simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
@@ -169,6 +169,13 @@ $cleartitle = str_replace('&amp;', '', $cleartitle); // удаляем ампе�
                 <textarea type="text" name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
+
+       <?php if ($zakonrf_mode == 1) : ?>    
+<div class="zakonrf">
+<label><input name="zakonrf" required type="checkbox"/><small> <a target="_blank" rel="nofollow" href="<?php echo $zakonrf_link ?>"> <?php echo $zakonrf_link_text; ?></a></small></label>
+</div>
+      <?php endif; ?>
+
        <?php if ($recaptcha_enabled == 1) : ?>    
     <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>
       <?php endif; ?>
@@ -177,7 +184,7 @@ $cleartitle = str_replace('&amp;', '', $cleartitle); // удаляем ампе�
                       <?php echo JHtml::_( 'form.token' ); ?>
                         <input type="hidden" name="module_id" value="<?php echo $module->id; ?>" />
                         <input type="hidden" name="Itemid" value="<?php echo $menu; ?>">
-                        <input type="hidden" name="simplecallback_page_title" value="<?php echo $cleartitle; ?>">
+                        <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
                         <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
                         <input type="hidden" name="simplecallback_custom_data" value="">
                         <button type="submit" class="uk-button uk-width-1-1 button21">
