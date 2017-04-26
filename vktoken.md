@@ -13,3 +13,4 @@
 * <a href="https://oauth.vk.com/authorize?client_id=4083558&amp;scope=friends,photos,audio,video,docs,notes,pages,status,offers,questions,wall,groups,messages,notifications,stats,ads,market,offline&amp;redirect_uri=https://api.vk.com/blank.html&amp;display=page&amp;response_type=token" class="list-group-item" target="_blank">VFeed</a>
 * <a href="https://oauth.vk.com/authorize?client_id=3116505&amp;scope=friends,photos,audio,video,docs,notes,pages,status,offers,questions,wall,groups,messages,notifications,stats,ads,market,offline&amp;redirect_uri=https://api.vk.com/blank.html&amp;display=page&amp;response_type=token" class="list-group-item" target="_blank">VK API</a>
 				
+![Фото пример токена](http://img-fotki.yandex.ru/get/198303/77677229.88/0_ac707_353557ac_orig.png)
