@@ -14,6 +14,9 @@ $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
 $zakonrf_link_text = $params->get('simplacallback_zakonrf_link_text');
 $zakonrf_link = $params->get('simplacallback_zakonrf_link');
 $overlayed = $params->get('simplecallback_overlay');
+$custom_textsimple_enabled = $params->get('simplecallback_custom_textsimple_enabled', 0);
+$custom_textsimple = $params->get('simplecallback_custom_textsimple');
+$phone_field_pattern = $params->get('simplecallback_phone_field_pattern');
 $namemod_enabled = $params->get('namemod_enabled', 0);
 $telmod_enabled = $params->get('telmod_enabled', 0);
 $emailclient_enabled = $params->get('emailclient_enabled', 0);
@@ -34,7 +37,9 @@ $name_req = $params->get('simplecallback_name_field_label_req', 0);
 $emailclient_req = $params->get('simplecallback_emailclient_field_label_req', 0);
 $phone_req = $params->get('simplecallback_phone_field_label_req', 0);
 $message_req = $params->get('simplecallback_message_req', 0);
+$custom_textsimple_req = $params->get('simplecallback_custom_textsimple_req', 0);
 $name_req = ($name_req == 1) ? 'required' : '' ;
+$custom_textsimple_req = ($custom_textsimple_req == 1) ? 'required' : '' ;
 $emailclient_req = ($emailclient_req == 1) ? 'required' : '' ;
 $phone_req = ($phone_req == 1) ? 'required' : '' ;
 $message_req = ($message_req == 1) ? 'required' : '' ;
@@ -42,6 +47,7 @@ $zv_name_req = ($name_req == 'required') ? '<span style="needreq">*</span>' : ''
 $zv_emailclient_req = ($emailclient_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_phone_req = ($phone_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>' : '' ;
+$zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 
 ?>
 
@@ -71,6 +77,15 @@ $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>
             </div>   
           <?php endif; ?>
 
+    <?php if ($custom_textsimple_enabled == 1) : ?> 
+            <div class="control-group">
+              <label><div class="textlabel">
+                <?php echo $params->get('simplecallback_custom_textsimple'); ?> <?php echo $zv_textsimple_req ?>  </div>
+                  <input type="text" name="custom_textsimple" <?php echo $custom_textsimple_req ?> class="input-block-level" autocomplete="off" />
+              </label>
+            </div>   
+          <?php endif; ?>
+
     <?php if ($emailclient_enabled == 1) : ?>
             <div class="control-group">
               <label><div class="textlabel">
@@ -94,7 +109,16 @@ $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>
             <div class="control-group">
               <label><div class="textlabel">
                 <?php echo $params->get('simplecallback_phone_field_label'); ?>  <?php echo $zv_phone_req ?>  </div>
-                  <input type="tel" pattern="(\+?\d[- .]*){6,14}" name="simplecallback_phone" <?php echo $phone_req ?>  class="input-block-level" autocomplete="off" />
+                  <input type="tel" <?php
+                  
+                  if (!empty($phone_field_pattern)) {
+                    echo "pattern='{$phone_field_pattern}'";
+                  }
+                  else {
+                    echo "";
+                  }
+                  
+                    ?> name="simplecallback_phone" <?php echo $phone_req ?>  class="input-block-level" autocomplete="off" />
               </label>
             </div>
           <?php endif; ?>

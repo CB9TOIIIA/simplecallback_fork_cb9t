@@ -56,11 +56,17 @@ class modSimpleCallbackHelper
         if(isset($data['reviewStars'])) {  $reviewStars = strip_tags($data['reviewStars']);} else { $reviewStars = null;}
         $rating_enabled = $params->get('simplecallback_rating_enabled', 0);
         $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
+        $page_url = $params->get('simplecallback_page_url');
         if(isset($data['zakonrf'])) {  $zakonrf = strip_tags($data['zakonrf']);} else { $zakonrf = null;}
         if(isset($data['simplecallback_city_field_label'])) { $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);  } else { $simplecallback_city_field_label = null;}
         if(isset($data['simplecallback_city_field_labe2'])) { $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);   } else { $simplecallback_city_field_labe2 = null;}
         if(isset($data['simplecallback_city_field_labe3'])) { $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);   } else { $simplecallback_city_field_labe3 = null;}
+        if(isset($data['custom_textsimple'])) { $simplecallback_custom_textsimple = strip_tags($data['custom_textsimple']);   } else { $simplecallback_custom_textsimple = null;}
+        $custom_textsimple_enabled = $params->get('simplecallback_custom_textsimple_enabled');
+        $custom_textsimple = $params->get('simplecallback_custom_textsimple');
         if(isset($data['simplecallback_page_url'])) { $page_url = strip_tags($data['simplecallback_page_url']);   } else { $page_url = null;}
+        if(isset($data['custom_textsimple'])) {  $custom_textsimple = strip_tags($data['custom_textsimple']);} else { $custom_textsimple = null;}
+        
         $body = "\n";
         if(!empty($name)) :     $body .= "\n". $params->get('simplecallback_name_field_label') . ": "  . $name; endif;
         if(!empty($phone)) :    $body .= "\n". $params->get('simplecallback_phone_field_label') . ": "  . $phone; endif;
@@ -69,8 +75,14 @@ class modSimpleCallbackHelper
         if(!empty($simplecallback_city_field_label)) :  $body .= "\nCity: " .  $simplecallback_city_field_label;  endif;
         if(!empty($simplecallback_city_field_labe2)) :  $body .= "\n" .  $simplecallback_city_field_labe2;  endif;
         if(!empty($simplecallback_city_field_labe3)) :  $body .= "\n" .  $simplecallback_city_field_labe3;  endif;
+        if(!empty($simplecallback_custom_textsimple)) :  $body .= "\n" .  $simplecallback_custom_textsimple;  endif;
         if(!empty($rating_enabled)) :  $body .= "\n" . $params->get('simplecallback_rating_field_label') . ": " . $reviewStars; endif;
         if(!empty($message)) :  $body .= "\n" . $params->get('simplecallback_message_field_label') . ": " . $message; endif;
+        if(!empty($page_url) && $params->get('simplecallback_page_url') == 1) :  $body .= "\n" . $params->get('simplecallback_page_url') . ": " . $page_url; endif;
+        if(!empty($simplecallback_custom_textsimple)) :  $body .= "\n" . $custom_textsimple . ": " . $simplecallback_custom_textsimple; endif;
+
+        preg_match("/\d{1,}.\d{1,}.\d{1,}/", PHP_VERSION, $MyPHPver);
+        $MyPHPv = $MyPHPver[0];
         $smsru_enable = $params->get('simplecallback_smsru_enable');
         $telegram_enabled = $params->get('simplecallback_telegram_enabled');
         $pushall_enabled = $params->get('simplecallback_pushall_enabled');
@@ -78,6 +90,7 @@ class modSimpleCallbackHelper
         $vk_enabled = $params->get('simplecallback_vk_enabled');
         $mail_enabled = $params->get('simplecallback_mail_enabled');
         $slack_enabled = $params->get('simplecallback_slack_enabled');
+        $mattermost_enabled = $params->get('simplecallback_mattermost_enabled');
         $smsru_translit = $params->get('simplecallback_smsru_translit');
         $smsru_test = $params->get('simplecallback_smsru_test');
         $smsru_api_id = $params->get('simplecallback_smsru_api_id');
@@ -86,6 +99,7 @@ class modSimpleCallbackHelper
         $pushall_key = $params->get('simplecallback_pushall_key');
         $smsru_phone = $params->get('simplecallback_smsru_phone');
         $slack_webhookurl = $params->get('simplecallback_slack_webhookurl');
+        $mattermost_webhookurl = $params->get('simplecallback_mattermost_webhookurl');
         $trello_key = $params->get('simplecallback_trello_key');
         $trello_token = $params->get('simplecallback_trello_token');
         $trello_idlist = $params->get('simplecallback_trello_idlist');
@@ -100,11 +114,14 @@ class modSimpleCallbackHelper
         $vk_offset = $params->get('simplecallback_vk_offset', 1);
         $vk_filter = $params->get('simplecallback_vk_filter');
         $vk_sort = $params->get('simplecallback_vk_sort');
+        $vk_userpush = $params->get('simplecallback_vk_userpush');
         $vk_from_group = $params->get('simplecallback_vk_from_group');
         $vk_board_comment = $params->get('simplecallback_vk_board_comment');
         $vk_wall_post = $params->get('simplecallback_vk_wall_post');
         $slack_username = $params->get('simplecallback_slack_username','SimpleCallbackBot');
         $slack_icon_emoji = $params->get('simplecallback_slack_icon_emoji',':rabbit:');
+        $mattermost_username = $params->get('simplecallback_mattermost_username','SimpleCallbackBot');
+        $mattermost_icon_emoji = $params->get('simplecallback_mattermost_icon_emoji',':rabbit:');
         $datemsg = date('d.m.Y H:i');
         $body .= "\n" .  date('d.m.Y H:i');
         $body .= " | " . $domainsite;
@@ -183,12 +200,13 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             }
 
             if ($telegram_enabled === '1' && !empty($telegram_chat_id)) {
-                $telegram_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . "\n" . $message);
+                $telegram_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple ."\n" . $message . $page_url);
                 $telegram_request_url = 'https://telegram.cb9t.ru/modsimplecallbackbot/fromweb.php?chatid=' . $telegram_chat_id . '&text=' . $telegram_text;
                 $telegram_result = file_get_contents($telegram_request_url);
             }
-       
-           if ($pozvonim_enabled === '1' && !empty($pozvonim_key)) {
+
+
+           if ($pozvonim_enabled === '1' && !empty($pozvonim_key) && $MyPHPv >= '5.4') {
                 $Tokenurl = 'https://api.pozvonim.com/v2u/auth/token?';
                 $ProfileUrl = 'https://api.pozvonim.com/v2u/profile?';
                 $rephone = urlencode($phone);
@@ -234,7 +252,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             }
 
             if ($pushall_enabled === '1' && !empty($pushall_id)) {
-                $pushall_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . "\n" . $message);
+                $pushall_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message . $page_url);
                 $pushall_request_url = 'https://pushall.ru/api.php?type=self&id='. $pushall_id .'&key='. $pushall_key .'&title=' . $subject . '&text=' . $pushall_text;
                 $pushall_result = file_get_contents($pushall_request_url);
             }
@@ -246,7 +264,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $payload = array(
                     'username'  =>  $slack_username,
                     'icon_emoji'  =>  $slack_icon_emoji,
-                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . PHP_EOL . $message.'----------------------',
+                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message . $page_url . '----------------------',
                 );
                 $jsonDataEncoded = json_encode($payload);
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -258,6 +276,27 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
                 $slack_result = curl_exec($ch);
+                curl_close($ch);
+            }
+     
+            if ($mattermost_enabled === '1' && !empty($mattermost_webhookurl)) {
+                $url = $mattermost_webhookurl;
+                $ch = curl_init();
+                $payload = array(
+                    'username'  =>  $mattermost_username,
+                    'icon_emoji'  =>  $mattermost_icon_emoji,
+                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message . $page_url . '----------------------',
+                );
+                $jsonDataEncoded = json_encode($payload);
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'joomla-bot');
+                curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                $mattermost_result = curl_exec($ch);
                 curl_close($ch);
             }
           
@@ -283,7 +322,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     }           
                 }
                 
-				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . "\n" . $message;
+				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message . $page_url . " ".$vk_userpush;
 
                 if ($vk_wall_post === '1') {
 
@@ -304,7 +343,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $ch = curl_init();
                 $payloadTrello = array(
                 'name'  =>  $name.' - '.$phone.'  '.$emailclient,
-                'desc'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . PHP_EOL . $message,
+                'desc'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message  . $page_url,
                 'pos'  =>  'top',
                 'due'  =>  null,
                 'key'  =>  $trello_key,
