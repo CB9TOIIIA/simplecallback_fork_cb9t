@@ -27,6 +27,7 @@ $message_enabled = $params->get('simplecallback_message', 0);
 $simplecallback_file_enabled = $params->get('simplecallback_file_enabled', 0);
 $captcha_enabled = $params->get('simplecallback_captcha', 0);
 $phone_mask = $params->get('simplecallback_phone_field_mask');
+$submit_field_css = $params->get('simplecallback_submit_field_css');
 $simplecallback_city_field_label = trim($params->get('simplecallback_city_field_label'));
 $simplecallback_city_field_labe2 = trim($params->get('simplecallback_city_field_labe2'));
 $simplecallback_city_field_labe3 = trim($params->get('simplecallback_city_field_labe3'));
@@ -211,7 +212,7 @@ $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="need
                         <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
                         <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
                         <input type="hidden" name="simplecallback_custom_data" value="">
-                        <button type="submit" class="uk-button uk-width-1-1 button21">
+                        <button type="submit" class="<?php echo $submit_field_css; ?>">
                           <?php echo $params->get('simplecallback_submit_field_label'); ?>
                         </button>
                     </div>

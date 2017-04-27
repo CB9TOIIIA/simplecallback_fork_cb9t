@@ -58,9 +58,11 @@ class modSimpleCallbackHelper
         $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
         $page_url = $params->get('simplecallback_page_url');
         if(isset($data['zakonrf'])) {  $zakonrf = strip_tags($data['zakonrf']);} else { $zakonrf = null;}
+        
         if(isset($data['simplecallback_city_field_label'])) { $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);  } else { $simplecallback_city_field_label = null;}
         if(isset($data['simplecallback_city_field_labe2'])) { $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);   } else { $simplecallback_city_field_labe2 = null;}
         if(isset($data['simplecallback_city_field_labe3'])) { $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);   } else { $simplecallback_city_field_labe3 = null;}
+
         if(isset($data['custom_textsimple'])) { $simplecallback_custom_textsimple = strip_tags($data['custom_textsimple']);   } else { $simplecallback_custom_textsimple = null;}
         $custom_textsimple_enabled = $params->get('simplecallback_custom_textsimple_enabled');
         $custom_textsimple = $params->get('simplecallback_custom_textsimple');
