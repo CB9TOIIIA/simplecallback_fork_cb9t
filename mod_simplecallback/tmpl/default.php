@@ -199,10 +199,10 @@ $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="need
 <div class="zakonrf">
 <label><input name="zakonrf" required type="checkbox"/><small> <a target="_blank" rel="nofollow" href="<?php echo $zakonrf_link ?>"> <?php echo $zakonrf_link_text; ?></a></small></label>
 </div>
-      <?php endif; ?>
+      <?php endif;  ?>
 
-       <?php if ($recaptcha_enabled == 1) : ?>    
-    <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>
+      <?php if ($recaptcha_enabled == 1 && JFactory::getConfig()->get('captcha') == 'recaptcha') : ?>    
+      <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>
       <?php endif; ?>
                     <div class="control-group">
                       <input type="text" name="simplecallback_username" class="simplecallback-username" maxlength="10">

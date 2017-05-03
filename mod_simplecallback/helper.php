@@ -109,6 +109,15 @@ class modSimpleCallbackHelper
         $pozvonim_key = $params->get('simplecallback_pozvonim_key');
         $pozvonim_uid = $params->get('simplecallback_pozvonim_uid');
         $pozvonim_siteid = $params->get('simplecallback_pozvonim_siteid');
+                
+        $bitrix24_enabled = $params->get('simplecallback_bitrix24_enabled');
+        $bitrix24_crm_host = $params->get('simplecallback_bitrix24_crm_host');
+        $bitrix24_crm_port = $params->get('simplecallback_bitrix24_crm_port', 443);
+        $bitrix24_crm_path = $params->get('simplecallback_bitrix24_crm_path', '/crm/configs/import/lead.php');
+        $bitrix24_crm_login = $params->get('simplecallback_bitrix24_crm_login');
+        $bitrix24_crm_password = $params->get('simplecallback_bitrix24_crm_password');
+        $bitrix24_crm_assigned = $params->get('simplecallback_bitrix24_crm_assigned', 1);
+
         $vk_access_token = $params->get('simplecallback_vk_access_token');
         $vk_group_id = $params->get('simplecallback_vk_group_id');
         $vk_topic_id = $params->get('simplecallback_vk_topic_id');
@@ -365,6 +374,65 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $Trello_result = curl_exec($ch);
                 curl_close($ch);
             }
+               
+            if ($bitrix24_enabled === '1' && !empty($bitrix24_crm_host) && !empty($bitrix24_crm_login) && !empty($bitrix24_crm_password))
+                {   
+                
+              $message_b24 = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message;
+
+                $postData = array(
+                    'LOGIN' => $bitrix24_crm_login,
+                    'PASSWORD' => $bitrix24_crm_password,
+                    'TITLE' => $subject,
+                    'NAME' => $name,
+                    'SOURCE_ID' => 'WEB',
+                    'PHONE_MOBILE' => $phone,
+                    'WEB_OTHER' => $page_url,
+                    'EMAIL_WORK' => $emailclient,
+                    'SOURCE_DESCRIPTION' => $page_url,
+                    'ASSIGNED_BY_ID' => (int) $bitrix24_crm_assigned,
+                    'COMMENTS' => $message_b24
+                );
+
+                // open socket to CRM
+                $fp = fsockopen("ssl://".$bitrix24_crm_host, $bitrix24_crm_port, $errno, $errstr, 30);
+                if ($fp)
+                {
+                    // prepare POST data
+                    $strPostData = '';
+                    foreach ($postData as $key => $value)
+                    $strPostData .= ($strPostData == '' ? '' : '&').$key.'='.urlencode($value);
+
+                    // prepare POST headers
+                    $str = "POST ".$bitrix24_crm_path." HTTP/1.0\r\n";
+                    $str .= "Host: ".$bitrix24_crm_host."\r\n";
+                    $str .= "Content-Type: application/x-www-form-urlencoded\r\n";
+                    $str .= "Content-Length: ".strlen($strPostData)."\r\n";
+                    $str .= "Connection: close\r\n\r\n";
+
+                    $str .= $strPostData;
+
+                    // send POST to CRM
+                    fwrite($fp, $str);
+
+                    // get CRM headers
+                    $result = '';
+                    while (!feof($fp))
+                    {
+                    $result .= fgets($fp, 128);
+                    }
+                    fclose($fp);
+
+                    // cut response headers
+                    $response = explode("\r\n\r\n", $result);
+                        //  dump($response,1,'response');
+                    // $output = '<pre>'.print_r($response[1], 1).'</pre>';
+                }
+                         else
+                     {
+                             echo 'Connection Failed! '.$errstr.' ('.$errno.')';
+                        }
+             }
 
 
             echo json_encode(array(
