@@ -217,32 +217,22 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             }
 
 
-           if ($pozvonim_enabled === '1' && !empty($pozvonim_key) && $MyPHPv >= '5.4') {
+           if ($pozvonim_enabled === '1' && !empty($pozvonim_key)) {
                 $Tokenurl = 'https://api.pozvonim.com/v2u/auth/token?';
                 $ProfileUrl = 'https://api.pozvonim.com/v2u/profile?';
                 $rephone = urlencode($phone);
-                $InputVars = [
+                $InputVars = array(
                 'uid'  => $pozvonim_uid,
                 'sign' => md5("{$pozvonim_key}uid={$pozvonim_uid}")
-                ];
+                 );
                 $ToketGet = $Tokenurl.http_build_query($InputVars,null,'&');
                 $getprofile = json_decode(file_get_contents($ToketGet));
                 $getprofilear = json_decode(json_encode($getprofile), true);
                 $Token = $getprofilear['token'];
                 $TokenExpire = $getprofilear['expire'];
                 $VarsGET = md5("{$Token}uid={$pozvonim_uid}");
-                $VarsGETnoMD5 = "{$Token}uid={$pozvonim_uid}";
-                $GETVars = [
-                'uid'  => $pozvonim_uid,
-                'sign' => $VarsGET
-                ];
                 $VarsGETPhone = md5("{$Token}phone={$rephone}&uid={$pozvonim_uid}");
                 $VarsGETPhonenoMD5 = "{$Token}phone={$rephone}&uid={$pozvonim_uid}";
-                $GETVarsCall = [
-                'phone'  => $phone,
-                'uid'  => $pozvonim_uid,
-                'sign' => $VarsGETPhone
-                ];
                 $POZVONIM_Post_Call = "https://api.pozvonim.com/v2u/sites/{$pozvonim_siteid}/call?";
                 $dataCall = array(
                 "phone" => $phone,
