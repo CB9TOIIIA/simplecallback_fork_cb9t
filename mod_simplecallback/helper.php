@@ -117,6 +117,18 @@ class modSimpleCallbackHelper
         $bitrix24_crm_login = $params->get('simplecallback_bitrix24_crm_login');
         $bitrix24_crm_password = $params->get('simplecallback_bitrix24_crm_password');
         $bitrix24_crm_assigned = $params->get('simplecallback_bitrix24_crm_assigned', 1);
+                
+        $amocrm_enabled = $params->get('simplecallback_amocrm_enabled');
+        $amocrm_crm_host = $params->get('simplecallback_amocrm_subdomain');
+        $amocrm_crm_login = $params->get('simplecallback_amocrm_crm_login');
+        $amocrm_crm_password = $params->get('simplecallback_amocrm_crm_hash');
+        $amocrm_crm_status_id = $params->get('simplecallback_amocrm_crm_status_id');
+        $amocrm_crm_custom_fields_phone = (int)$params->get('simplecallback_amocrm_crm_custom_fields_phone');
+        $amocrm_crm_custom_fields_emailclient = (int)$params->get('simplecallback_amocrm_crm_custom_fields_emailclient');
+        $amocrm_crm_custom_fields_tags = $params->get('simplecallback_amocrm_crm_custom_fields_tags');
+        $amocrm_crm_custom_fields_element_type = (int)$params->get('simplecallback_amocrm_crm_custom_fields_element_type');
+        $amocrm_crm_custom_fields_task_type = (int)$params->get('simplecallback_amocrm_crm_custom_fields_task_type');
+        $amocrm_crm_custom_fields_complete_till = (int)$params->get('simplecallback_amocrm_crm_custom_fields_complete_till');
 
         $vk_access_token = $params->get('simplecallback_vk_access_token');
         $vk_group_id = $params->get('simplecallback_vk_group_id');
@@ -423,7 +435,146 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                              echo 'Connection Failed! '.$errstr.' ('.$errno.')';
                         }
              }
+            if ($amocrm_enabled === '1' && !empty($amocrm_crm_host) && !empty($amocrm_crm_login) && !empty($amocrm_crm_password))
+                {   
+                            
+                $message_amocrm = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message;
 
+                $subdomain = $amocrm_crm_host;
+                $user=array(
+                    'USER_LOGIN'=>$amocrm_crm_login,
+                    'USER_HASH'=>$amocrm_crm_password
+                );
+
+                $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';    
+                $curl=curl_init(); 
+                curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                curl_setopt($curl,CURLOPT_URL,$link);
+                curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($user));
+                curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                curl_setopt($curl,CURLOPT_HEADER,false);
+                curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt'); 
+                curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+
+                $out=curl_exec($curl);
+                $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+                $Response=json_decode($out,true);
+
+                $new_lead_title = $subject;
+
+                    $leads['request']['leads']['add']=array(
+                    array(
+                        'name'=>$new_lead_title,
+                        'status_id'=>$amocrm_crm_status_id,
+                    )
+                 );
+
+                $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/leads/set';
+                $curl=curl_init();
+
+                curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                curl_setopt($curl,CURLOPT_URL,$link);
+                curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($leads));
+                curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                curl_setopt($curl,CURLOPT_HEADER,false);
+                curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+
+                $out=curl_exec($curl);
+                $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+                $Response=json_decode($out,true);
+
+                $newleadid = $Response['response']['leads']['add'][0]['id'];
+                $lead_user_new = 1;
+                $contact=array(
+                            'responsible_user_id'=>$lead_user_new,
+                            'custom_fields'=>array()
+                        );
+
+                $contact['custom_fields'][]=array(
+                        'id' => $amocrm_crm_custom_fields_phone, 
+                        'values'=>array(
+                        array(
+                            'value'=>$phone,
+                            'enum'=>'HOME'
+                        )
+                        )
+                    );
+
+                $contact['custom_fields'][]=array(
+                        'id' => $amocrm_crm_custom_fields_emailclient,  
+                        'values'=>array(
+                        array(
+                            'value'=>$emailclient,
+                            'enum'=>'WORK'
+                        )
+                        )
+                    );
+
+                $contact['name'] = $name;
+                $contact['tags'] = $amocrm_crm_custom_fields_tags;
+                $contact['linked_leads_id'] = Array($newleadid);
+                $contact_params=Array();
+                $contact_params['request']['contacts']['add'][]=$contact;
+
+                $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/contacts/set';
+                $curl=curl_init();
+
+                curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                curl_setopt($curl,CURLOPT_URL,$link);
+                curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($contact_params));
+                curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                curl_setopt($curl,CURLOPT_HEADER,false);
+                curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+
+                $out=curl_exec($curl);
+                $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+
+                $leadRess = json_decode($out);
+                // Ставим задачу
+                $tasks['request']['tasks']['add']=array(
+                array(
+                    'element_id' => $newleadid,
+                    'element_type' => $amocrm_crm_custom_fields_element_type, // Type: 1 - контакт, 2 - сделка
+                    'task_type' => $amocrm_crm_custom_fields_task_type, #Встреча
+                    'text'=> $message_amocrm,
+                    'complete_till' => time() + $amocrm_crm_custom_fields_complete_till,
+                )
+                );
+
+                $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/tasks/set';
+                $curl=curl_init();
+
+                curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
+                curl_setopt($curl,CURLOPT_URL,$link);
+                curl_setopt($curl,CURLOPT_CUSTOMREQUEST,'POST');
+                curl_setopt($curl,CURLOPT_POSTFIELDS,json_encode($tasks));
+                curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                curl_setopt($curl,CURLOPT_HEADER,false);
+                curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt');
+                curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
+                curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
+
+                $out=curl_exec($curl);
+                $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+                $Response=json_decode($out,true);
+
+             }
 
             echo json_encode(array(
             'success' => true,

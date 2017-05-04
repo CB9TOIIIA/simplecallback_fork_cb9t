@@ -201,7 +201,7 @@ $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="need
 </div>
       <?php endif;  ?>
 
-      <?php if ($recaptcha_enabled == 1 && JFactory::getConfig()->get('captcha') == 'recaptcha') : ?>    
+      <?php if ($recaptcha_enabled == 1) : ?>    
       <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>
       <?php endif; ?>
                     <div class="control-group">
@@ -217,3 +217,4 @@ $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="need
                         </button>
                     </div>
   </form>
+
