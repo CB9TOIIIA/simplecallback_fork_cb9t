@@ -130,6 +130,15 @@ class modSimpleCallbackHelper
         $amocrm_crm_custom_fields_task_type = (int)$params->get('simplecallback_amocrm_crm_custom_fields_task_type');
         $amocrm_crm_custom_fields_complete_till = (int)$params->get('simplecallback_amocrm_crm_custom_fields_complete_till');
 
+        $megaplan_enabled = $params->get('simplecallback_megaplan_enabled');
+        $megaplan_host = $params->get('simplecallback_megaplan_host');
+        $megaplan_login = $params->get('simplecallback_megaplan_login');
+        $megaplan_password = $params->get('simplecallback_megaplan_password');
+        $megaplan_deadline = $params->get('simplecallback_megaplan_deadline');
+        $megaplan_responsible = $params->get('simplecallback_megaplan_responsible');
+        $megaplan_severity = $params->get('simplecallback_megaplan_severity');
+        $megaplan_middleName = $params->get('simplecallback_megaplan_middleName');
+
         $vk_access_token = $params->get('simplecallback_vk_access_token');
         $vk_group_id = $params->get('simplecallback_vk_group_id');
         $vk_topic_id = $params->get('simplecallback_vk_topic_id');
@@ -576,6 +585,61 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
 
              }
 
+            if ($megaplan_enabled === '1') {
+               
+            require_once dirname(__FILE__) . '/crm/megaplan/Request.php';
+
+                // Авторизуемся в Мегаплане
+                $request = new SdfApi_Request( '', '', $megaplan_host, true );
+                $response = json_decode(
+                        $request->get(
+                            '/BumsCommonApiV01/User/authorize.api',
+                                array(
+                                    'Login' => $megaplan_login,
+                                    'Password' => md5( $megaplan_password )
+                                    )
+                                )
+                            );
+
+                // Получаем AccessId и SecretKey
+                $accessId = $response->data->AccessId;
+                $secretKey = $response->data->SecretKey;
+
+                // Переподключаемся с полученными AccessId и SecretKey
+                unset( $request );
+                $request = new SdfApi_Request( $accessId, $secretKey, $megaplan_host, true );
+
+                // Создаем задачу
+                $raw = $request->post('/BumsCrmApiV01/Contractor/save.api',array(
+                        'Model[FirstName]' => $name,
+                        'Model[TypePerson]' => "human",		
+                        'Model[LastName]' => " ",
+                        'Model[MiddleName]' => $megaplan_middleName,
+                        'Model[Email]' => $emailclient,
+                        'Model[Phones]' => array("ph_m{$phone}\tSimpleCallback"),	
+                        'Model[Responsible]' => $megaplan_responsible,	
+                        ) );
+
+                // Чистый форматированный JSON (ответ сервера с ID созданной задачи)
+                $queryContact = json_decode($raw, true);     
+
+                $NewCustomerId = $queryContact['data']['contractor']['Id'];
+
+                $dateDeadline = date('d.m.Y', strtotime($megaplan_deadline));
+
+                $raw = $request->post('/BumsTaskApiV01/Task/create.api',array(
+                        'Model[Name]' => $subject,
+                        'Model[DeadlineDate]' => $dateDeadline,
+                        'Model[Responsible]' => $megaplan_responsible,
+                        'Model[Customer]' => $NewCustomerId,
+                        'Model[Severity]' => $megaplan_severity,
+                        'Model[Statement]' => $message,
+                        ) );
+
+                // Чистый форматированный JSON (ответ сервера с ID созданной задачи)
+                $query = json_decode($raw, true);
+               
+           }
             echo json_encode(array(
             'success' => true,
             'error' => false,
