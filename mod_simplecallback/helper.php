@@ -164,6 +164,7 @@ class modSimpleCallbackHelper
         
         if (!empty($sender)) {
             $mail->setSender(array($sender, $fromname));
+            $mail->addReplyTo(array($sender, $fromname));
         } else {
             $sender = array(
             $config->get( 'mailfrom' ),
@@ -171,6 +172,7 @@ class modSimpleCallbackHelper
             );
             
             $mail->setSender($sender);
+            $mail->addReplyTo($sender);
         }
 
 
