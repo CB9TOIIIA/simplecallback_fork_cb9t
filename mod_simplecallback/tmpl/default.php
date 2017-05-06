@@ -49,6 +49,24 @@ $zv_emailclient_req = ($emailclient_req == 'required') ? '<span style="needreq">
 $zv_phone_req = ($phone_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="needreq">*</span>' : '' ;
+$my_inline_css_enabled = $params->get('simplacallback_my_inline_css_enabled', 0);
+$my_inline_css = $params->get('simplacallback_my_inline_css', '');
+$textarea_width = $params->get('simplecallback_textarea_width', 0);
+$textarea_width_cols = $params->get('simplecallback_textarea_width_cols', '');
+$textarea_width_rows = $params->get('simplecallback_textarea_width_rows', '');
+
+if ($my_inline_css_enabled == 1) {
+  echo '<style>'.$my_inline_css.'</style>';
+}
+
+if ($textarea_width == 1) {
+  $textarea_width_cols = 'cols="'.$textarea_width_cols.'"';
+  $textarea_width_rows = 'rows="'.$textarea_width_rows.'"';
+}
+else {
+  $textarea_width_cols = '';
+  $textarea_width_rows = '';
+}
 
 ?>
 
@@ -191,7 +209,7 @@ $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="need
                 <label> <div class="textlabel">
                   <?php echo $params->get('simplecallback_message_field_label'); ?>  <?php echo $zv_message_req ?>    </div>
                 </label>
-                <textarea type="text" name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
+                <textarea type="text" <?php echo $textarea_width_cols ?> <?php echo $textarea_width_rows ?> name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
 
