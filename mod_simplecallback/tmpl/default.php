@@ -50,10 +50,12 @@ $zv_phone_req = ($phone_req == 'required') ? '<span style="needreq">*</span>' : 
 $zv_message_req = ($message_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $zv_textsimple_req = ($custom_textsimple_req == 'required') ? '<span style="needreq">*</span>' : '' ;
 $my_inline_css_enabled = $params->get('simplacallback_my_inline_css_enabled', 0);
+$reachgoal_enabled = $params->get('simplacallback_reachgoal_enabled', 0);
 $my_inline_css = $params->get('simplacallback_my_inline_css', '');
 $textarea_width = $params->get('simplecallback_textarea_width', 0);
 $textarea_width_cols = $params->get('simplecallback_textarea_width_cols', '');
 $textarea_width_rows = $params->get('simplecallback_textarea_width_rows', '');
+$reachgoal_text = $params->get('simplacallback_reachgoal_text', '');
 
 if ($my_inline_css_enabled == 1) {
   echo '<style>'.$my_inline_css.'</style>';
@@ -66,6 +68,13 @@ if ($textarea_width == 1) {
 else {
   $textarea_width_cols = '';
   $textarea_width_rows = '';
+}
+
+if ($reachgoal_enabled == 1) {
+   $reachgoal_text = 'onClick="'.$reachgoal_text.'"';
+}
+else {
+   $reachgoal_text = '';
 }
 
 ?>
@@ -230,7 +239,7 @@ else {
                         <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
                         <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
                         <input type="hidden" name="simplecallback_custom_data" value="">
-                        <button type="submit" class="<?php echo $submit_field_css; ?>">
+                        <button type="submit" <?php echo $reachgoal_text ?> class="<?php echo $submit_field_css; ?>">
                           <?php echo $params->get('simplecallback_submit_field_label'); ?>
                         </button>
                     </div>
