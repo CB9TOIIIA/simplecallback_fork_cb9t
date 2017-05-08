@@ -109,6 +109,8 @@ class modSimpleCallbackHelper
         $pozvonim_key = $params->get('simplecallback_pozvonim_key');
         $pozvonim_uid = $params->get('simplecallback_pozvonim_uid');
         $pozvonim_siteid = $params->get('simplecallback_pozvonim_siteid');
+        $redirect_enabled = $params->get('simplacallback_redirect_enabled');
+        $redirect_url = $params->get('simplacallback_redirect_url');
                 
         $bitrix24_enabled = $params->get('simplecallback_bitrix24_enabled');
         $bitrix24_crm_host = $params->get('simplecallback_bitrix24_crm_host');

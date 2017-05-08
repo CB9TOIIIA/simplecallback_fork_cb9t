@@ -56,6 +56,8 @@ $textarea_width = $params->get('simplecallback_textarea_width', 0);
 $textarea_width_cols = $params->get('simplecallback_textarea_width_cols', '');
 $textarea_width_rows = $params->get('simplecallback_textarea_width_rows', '');
 $reachgoal_text = $params->get('simplacallback_reachgoal_text', '');
+$redirect_enabled = $params->get('simplacallback_redirect_enabled', 0);
+$redirect_url = $params->get('simplacallback_redirect_url');
 
 if ($my_inline_css_enabled == 1) {
   echo '<style>'.$my_inline_css.'</style>';
@@ -221,6 +223,16 @@ else {
                 <textarea type="text" <?php echo $textarea_width_cols ?> <?php echo $textarea_width_rows ?> name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
+
+      <?php  
+      if ($redirect_enabled == 1) {
+       echo $redirect_url ='<div style="display:none" id="redirectsuccesssimplecallback">'.$redirect_url.'</div>';
+      }
+      else {
+       echo $redirect_url = '<div style="display:none" id="redirectsuccesssimplecallback">noturl</div>';
+      }
+   
+    ?>
 
        <?php if ($zakonrf_mode == 1) : ?>    
 <div class="zakonrf">
