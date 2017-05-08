@@ -183,7 +183,7 @@
     });
 
     $(function () {
-
+        var redirecttourl = $("#redirectsuccesssimplecallback").text();
         var simplecallback = {
             show: function(id, customData) {
                 if (id && $('body > #simplecallback-' + id).length > 0) {
@@ -252,6 +252,7 @@
                         });
                         form[0].reset();
                         simplecallback.hide();
+                       
                   } else {
                         swal({   title: "Ошибка!",   type: "warning",  text: data.message,   timer: 5000,   showConfirmButton: false });
                         //console.log(data.message);
@@ -259,6 +260,9 @@
                     
                     form.removeClass('simplecallback-loading');
                     submitBtn.attr('disabled', false);
+                    if (redirecttourl != 'noturl') {
+                        window.location.href = redirecttourl;
+                    }
                 }
             });
 
