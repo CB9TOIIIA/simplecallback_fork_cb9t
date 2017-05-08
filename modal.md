@@ -2,9 +2,6 @@
 Простой модуль обратного звонка или для обратной связи. Совместим с Joomla 3.0 и выше.
 При необходимости дополняется компонентом [Simple Callback Component](https://github.com/birdkiwi/com_simplecallback/releases/), для сохранения сообщений в панели администрирования.
 
-![mod_simplecallback screenshot](screenshot-1.png)
-![mod_simplecallback screenshot](screenshot-2.png)
-![mod_simplecallback screenshot](screenshot-3.png)
 
 **Основные преимущества:**
 
