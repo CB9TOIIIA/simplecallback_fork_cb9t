@@ -111,6 +111,7 @@ class modSimpleCallbackHelper
         $pozvonim_siteid = $params->get('simplecallback_pozvonim_siteid');
         $redirect_enabled = $params->get('simplacallback_redirect_enabled');
         $redirect_url = $params->get('simplacallback_redirect_url');
+        $checkacy = '';
                 
         $bitrix24_enabled = $params->get('simplecallback_bitrix24_enabled');
         $bitrix24_crm_host = $params->get('simplecallback_bitrix24_crm_host');
@@ -119,7 +120,11 @@ class modSimpleCallbackHelper
         $bitrix24_crm_login = $params->get('simplecallback_bitrix24_crm_login');
         $bitrix24_crm_password = $params->get('simplecallback_bitrix24_crm_password');
         $bitrix24_crm_assigned = $params->get('simplecallback_bitrix24_crm_assigned', 1);
-                
+
+        $acy_enabled = $params->get('simplecallback_acy_enabled', 1);
+        $acy_subscribe = $params->get('simplecallback_acy_subscribe');
+        $acy_subscribe_active = $params->get('simplecallback_acy_subscribe_active', 1);
+
         $amocrm_enabled = $params->get('simplecallback_amocrm_enabled');
         $amocrm_crm_host = $params->get('simplecallback_amocrm_subdomain');
         $amocrm_crm_login = $params->get('simplecallback_amocrm_crm_login');
@@ -644,11 +649,54 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $query = json_decode($raw, true);
                
            }
+
+           if ($acy_enabled === '1' && !empty($emailclient)) {
+                            
+                if (!include_once (rtrim(JPATH_ADMINISTRATOR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_acymailing' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'helper.php')) {
+                    // false
+                }
+                else {
+
+                    $subscribe = explode(',',$acy_subscribe); 
+                    $newSubscription = array();
+
+                    if (!empty($subscribe)) {
+                        foreach($subscribe as $listId) {
+                            $newList = array();
+                       if ($acy_subscribe_active == 1) {  
+                           
+                            $newList['status'] = 1; } 
+                       
+                       else {
+                                $newList['status'] = 0;
+                       }
+                            $newSubscription[$listId] = $newList;
+                        }
+                    }
+
+                    $myUser = new stdClass();
+                    $myUser->email = $emailclient;
+
+                    if (empty($name)) {
+                        $name = $emailclient;
+                    }
+                    
+                    $myUser->name = $name; 
+                    $subscriberClass = acymailing_get('class.subscriber');
+                    $subidSub = $subscriberClass->save($myUser);
+                    $SaveToSub = $subscriberClass->saveSubscription($subidSub, $newSubscription);
+
+
+    }
+}
             echo json_encode(array(
             'success' => true,
             'error' => false,
             'message' => $params->get('simplacallback_ajax_success_msg', JText::_( 'MOD_SIMPLECALLBACK_AJAX_MSG_SUCCESS_DEFAULT' ))
             ));
+
+
+            
             die();
         } else {
             echo json_encode(array(

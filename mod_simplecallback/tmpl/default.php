@@ -58,6 +58,10 @@ $textarea_width_rows = $params->get('simplecallback_textarea_width_rows', '');
 $reachgoal_text = $params->get('simplacallback_reachgoal_text', '');
 $redirect_enabled = $params->get('simplacallback_redirect_enabled', 0);
 $redirect_url = $params->get('simplacallback_redirect_url');
+$my_text_before_enabled = $params->get('simplacallback_my_text_before_enabled', 0);
+$my_text_before = $params->get('simplacallback_my_text_before');
+$my_text_after_enabled = $params->get('simplacallback_my_text_after_enabled', 0);
+$my_text_after = $params->get('simplacallback_my_text_after');
 
 if ($my_inline_css_enabled == 1) {
   echo '<style>'.$my_inline_css.'</style>';
@@ -78,6 +82,12 @@ if ($reachgoal_enabled == 1) {
 else {
    $reachgoal_text = '';
 }
+
+if ($my_text_before_enabled == 1) {
+  echo "<div class='beforeformtext'>".$my_text_before."</div>";
+}
+
+
 
 ?>
 
@@ -257,3 +267,10 @@ else {
                     </div>
   </form>
 
+<?php 
+
+if ($my_text_after_enabled == 1) {
+  echo "<div class='afterformtext'>".$my_text_after."</div>";
+}
+
+?>
