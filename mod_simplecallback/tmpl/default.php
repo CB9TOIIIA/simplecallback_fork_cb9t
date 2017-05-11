@@ -171,7 +171,7 @@ if ($my_text_before_enabled == 1) {
 
             <?php if ($city_enabled == 1) : ?>
             <div class="control-group city">
-              <label><div class="textlabel">Район: </div></label>
+              <label><div class="textlabelrayon">Район: </div></label>
               <div class="clearfix"></div>
               <label>
  <?php           
