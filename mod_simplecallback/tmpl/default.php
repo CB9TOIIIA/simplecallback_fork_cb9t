@@ -62,9 +62,15 @@ $my_text_before_enabled = $params->get('simplacallback_my_text_before_enabled', 
 $my_text_before = $params->get('simplacallback_my_text_before');
 $my_text_after_enabled = $params->get('simplacallback_my_text_after_enabled', 0);
 $my_text_after = $params->get('simplacallback_my_text_after');
+$label_enabled = $params->get('simplacallback_label_enabled', 1);
+$placeholder_enabled = $params->get('simplacallback_placeholder_enabled', 0);
 
 if ($my_inline_css_enabled == 1) {
   echo '<style>'.$my_inline_css.'</style>';
+}
+
+if ($label_enabled == 0) {
+  echo '<style>.simplecallback label .textlabel {display:none}</style>';
 }
 
 if ($textarea_width == 1) {
@@ -112,7 +118,7 @@ if ($my_text_before_enabled == 1) {
             <div class="control-group">
               <label><div class="textlabel">
                 <?php echo $params->get('simplecallback_name_field_label'); ?> <?php echo $zv_name_req ?>  </div>
-                  <input type="text" name="simplecallback_name" <?php echo $name_req ?> class="input-block-level" autocomplete="off" />
+                  <input type="text"  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_name_field_label')}'" ;} ?>  name="simplecallback_name" <?php echo $name_req ?> class="input-block-level" autocomplete="off" />
               </label>
             </div>   
           <?php endif; ?>
@@ -121,7 +127,7 @@ if ($my_text_before_enabled == 1) {
             <div class="control-group">
               <label><div class="textlabel">
                 <?php echo $params->get('simplecallback_custom_textsimple'); ?> <?php echo $zv_textsimple_req ?>  </div>
-                  <input type="text" name="custom_textsimple" <?php echo $custom_textsimple_req ?> class="input-block-level" autocomplete="off" />
+                  <input type="text"  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_custom_textsimple')}'" ;} ?>  name="custom_textsimple" <?php echo $custom_textsimple_req ?> class="input-block-level" autocomplete="off" />
               </label>
             </div>   
           <?php endif; ?>
@@ -130,7 +136,7 @@ if ($my_text_before_enabled == 1) {
             <div class="control-group">
               <label><div class="textlabel">
                 <?php echo $params->get('simplecallback_emailclient_field_label'); ?>  <?php echo $zv_emailclient_req ?>  </div>
-                  <input type="text" name="simplecallback_emailclient"  <?php echo $emailclient_req ?>  class="input-block-level" autocomplete="off" />
+                  <input type="text"   <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_emailclient_field_label')}'" ;} ?>  name="simplecallback_emailclient"  <?php echo $emailclient_req ?>  class="input-block-level" autocomplete="off" />
               </label>
             </div>   
           <?php endif; ?>
@@ -149,7 +155,7 @@ if ($my_text_before_enabled == 1) {
             <div class="control-group">
               <label><div class="textlabel">
                 <?php echo $params->get('simplecallback_phone_field_label'); ?>  <?php echo $zv_phone_req ?>  </div>
-                  <input type="tel" <?php
+                  <input  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_phone_field_label')}'" ;} ?> type="tel" <?php
                   
                   if (!empty($phone_field_pattern)) {
                     echo "pattern='{$phone_field_pattern}'";
@@ -171,7 +177,7 @@ if ($my_text_before_enabled == 1) {
  <?php           
  if (!empty($simplecallback_city_field_label)) : ?>
   
-  <input type="radio" name="simplecallback_city_field_label"
+  <input <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_city_field_label')}'" ;} ?> type="radio" name="simplecallback_city_field_label"
     value="<?php echo $params->get('simplecallback_city_field_label'); ?>" />
     <?php echo $params->get('simplecallback_city_field_label'); ?>
 
@@ -230,7 +236,7 @@ if ($my_text_before_enabled == 1) {
                 <label> <div class="textlabel">
                   <?php echo $params->get('simplecallback_message_field_label'); ?>  <?php echo $zv_message_req ?>    </div>
                 </label>
-                <textarea type="text" <?php echo $textarea_width_cols ?> <?php echo $textarea_width_rows ?> name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
+                <textarea <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_message_field_label')}'" ;} ?> type="text" <?php echo $textarea_width_cols ?> <?php echo $textarea_width_rows ?> name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
 
