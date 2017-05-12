@@ -698,7 +698,6 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     $subidSub = $subscriberClass->save($myUser);
                     $SaveToSub = $subscriberClass->saveSubscription($subidSub, $newSubscription);
 
-
     }
 }
             echo json_encode(array(
