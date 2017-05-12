@@ -112,6 +112,8 @@ class modSimpleCallbackHelper
         $redirect_enabled = $params->get('simplacallback_redirect_enabled');
         $redirect_url = $params->get('simplacallback_redirect_url');
         $checkacy = '';
+        $acy_extra1 = $params->get('simplecallback_acy_extra1');
+        $acy_extra2 = $params->get('simplecallback_acy_extra2');
                 
         $bitrix24_enabled = $params->get('simplecallback_bitrix24_enabled');
         $bitrix24_crm_host = $params->get('simplecallback_bitrix24_crm_host');
@@ -677,11 +679,21 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     $myUser = new stdClass();
                     $myUser->email = $emailclient;
 
+
                     if (empty($name)) {
                         $name = $emailclient;
                     }
                     
                     $myUser->name = $name; 
+
+                    if (!empty($phone)) {
+                       $myUser->phone = $phone; 
+                    }
+
+                    if (!empty($message)) {
+                       $myUser->message = $message; 
+                    }
+
                     $subscriberClass = acymailing_get('class.subscriber');
                     $subidSub = $subscriberClass->save($myUser);
                     $SaveToSub = $subscriberClass->saveSubscription($subidSub, $newSubscription);

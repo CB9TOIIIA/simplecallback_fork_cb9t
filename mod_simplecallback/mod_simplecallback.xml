@@ -4,7 +4,7 @@
     <author>Eugene Kopylov</author>
     <authoremail>cb9toiiia@gmail.com</authoremail>
     <authorurl>https://github.com/CB9TOIIIA/simplecallback_fork_cb9t</authorurl>
-    <version>1.3.5</version>
+    <version>1.3.6</version>
     <creationdate>24.02.2015</creationdate>
     <description>
         <![CDATA[Продвинутый модуль формы обратной связи для CMS Joomla! <br><b>Для настройки и добавление новых возможностей (мои контакты): Сайт: <a target="_blank" href="https://seosm.ru/">www.SEOSM.ru</a> Skype: cb9t.ru / Telegram: <a href="https://t.me/cb9toiiia" target="_blank">@CB9TOIIIA</a> / Почта: cb9toiiia@gmail.com </b><br><iframe frameborder='0' allowtransparency='true' scrolling='no' src='https://tpv.sr/1QoBXDF/' width='510' height='315'></iframe>]]>
@@ -785,6 +785,22 @@
                     label="ID рассылок "
                     default="1,2,3"
                     description=""></field>
+
+                    <field
+                    type="spacer"
+                    name="simplecallback_acy_extra1"
+                    class="text"
+                     label="Extra-поле (телефон) - phone">
+                    </field>
+
+                    <field
+                    type="spacer"
+                    name="simplecallback_acy_extra2"
+                    class="text"
+                     label="Extra-поле (сообщение) - message">
+
+                    </field>
+
 
                 <field
                     type="radio"
