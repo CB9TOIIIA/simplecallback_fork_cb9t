@@ -68,7 +68,8 @@ class modSimpleCallbackHelper
         $custom_textsimple = $params->get('simplecallback_custom_textsimple');
         if(isset($data['simplecallback_page_url'])) { $page_url = strip_tags($data['simplecallback_page_url']);   } else { $page_url = null;}
         if(isset($data['custom_textsimple'])) {  $custom_textsimple = strip_tags($data['custom_textsimple']);} else { $custom_textsimple = null;}
-        
+
+
         $body = "\n";
         if(!empty($name)) :     $body .= "\n". $params->get('simplecallback_name_field_label') . ": "  . $name; endif;
         if(!empty($phone)) :    $body .= "\n". $params->get('simplecallback_phone_field_label') . ": "  . $phone; endif;
@@ -81,7 +82,11 @@ class modSimpleCallbackHelper
         if(!empty($rating_enabled)) :  $body .= "\n" . $params->get('simplecallback_rating_field_label') . ": " . $reviewStars; endif;
         if(!empty($message)) :  $body .= "\n" . $params->get('simplecallback_message_field_label') . ": " . $message; endif;
         if(!empty($page_url) && $params->get('simplecallback_page_url') == 1) :  $body .= "\n" . $params->get('simplecallback_page_url') . ": " . $page_url; endif;
+        $redirect_url_title = '';
+        if($params->get('simplacallback_redirect_url_title') == 1) :  $redirect_url_title = JFactory::getApplication()->getParams()->get('page_title', ''); endif;
+        if(!empty($redirect_url_title) && $params->get('simplacallback_redirect_url_title') == 1) :  $body .= "\n" . $params->get('simplacallback_redirect_url_title') . ": " . $redirect_url_title; endif;
         if(!empty($simplecallback_custom_textsimple)) :  $body .= "\n" . $custom_textsimple . ": " . $simplecallback_custom_textsimple; endif;
+        if(!empty($redirect_url_title)) { $redirect_url_title = 'Со страницы: '. $redirect_url_title; }
 
         preg_match("/\d{1,}.\d{1,}.\d{1,}/", PHP_VERSION, $MyPHPver);
         $MyPHPv = $MyPHPver[0];
@@ -243,7 +248,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             }
 
             if ($telegram_enabled === '1' && !empty($telegram_chat_id)) {
-                $telegram_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple ."\n" . $message . $page_url);
+                $telegram_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple ."\n" . $message  . "\n" . $page_url  . "\n" . $redirect_url_title);
                 $telegram_request_url = 'https://telegram.cb9t.ru/modsimplecallbackbot/fromweb.php?chatid=' . $telegram_chat_id . '&text=' . $telegram_text;
                 $telegram_result = file_get_contents($telegram_request_url);
             }
@@ -285,7 +290,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             }
 
             if ($pushall_enabled === '1' && !empty($pushall_id)) {
-                $pushall_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message . $page_url);
+                $pushall_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message  . "\n" . $page_url  . "\n" . $redirect_url_title);
                 $pushall_request_url = 'https://pushall.ru/api.php?type=self&id='. $pushall_id .'&key='. $pushall_key .'&title=' . $subject . '&text=' . $pushall_text;
                 $pushall_result = file_get_contents($pushall_request_url);
             }
@@ -297,7 +302,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $payload = array(
                     'username'  =>  $slack_username,
                     'icon_emoji'  =>  $slack_icon_emoji,
-                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message . $page_url . '----------------------',
+                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message  . "\n" . $page_url  . "\n" . $redirect_url_title . '----------------------',
                 );
                 $jsonDataEncoded = json_encode($payload);
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -318,7 +323,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $payload = array(
                     'username'  =>  $mattermost_username,
                     'icon_emoji'  =>  $mattermost_icon_emoji,
-                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message . $page_url . '----------------------',
+                    'text'  =>  $datemsg . PHP_EOL . $subject . PHP_EOL .  $name . PHP_EOL . $emailclient . PHP_EOL . $phone. PHP_EOL . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  PHP_EOL . $message  . "\n" . $page_url  . "\n" . $redirect_url_title . '----------------------',
                 );
                 $jsonDataEncoded = json_encode($payload);
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -355,7 +360,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     }           
                 }
                 
-				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message . $page_url . " ".$vk_userpush;
+				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message  . "\n" . $page_url  . "\n" . $redirect_url_title . " ".$vk_userpush;
 
                 if ($vk_wall_post === '1') {
 
@@ -400,7 +405,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             if ($bitrix24_enabled === '1' && !empty($bitrix24_crm_host) && !empty($bitrix24_crm_login) && !empty($bitrix24_crm_password))
                 {   
                 
-              $message_b24 = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message;
+              $message_b24 = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message  ." " . $page_url  ." " . $redirect_url_title;
 
                 $postData = array(
                     'LOGIN' => $bitrix24_crm_login,
