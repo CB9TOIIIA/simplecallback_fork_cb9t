@@ -1,8 +1,7 @@
 ## Модуль обратного звонка  (форма обратной связи для Joomla!)
 ### Мои релизы: https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/releases
 
-Демо: http://stirrem.ru/
-Демо 2: http://stirrem.ru/contacts-phones
+Демо: http://stirrem.ru/ и http://stirrem.ru/contacts-phones
 
 # SimpleCallback
 ### Эффективный модуль обратной связи для Joomla! - БЕСПЛАТНО!  
