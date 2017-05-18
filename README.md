@@ -6,7 +6,9 @@
 
 # SimpleCallback
 ### Эффективный модуль обратной связи для Joomla! - БЕСПЛАТНО!  
+
 >30+ интеграций: CRM / Соц. сети / Мессенджеры.
+
 ![s1_ru](https://cloud.githubusercontent.com/assets/1074710/26200941/53fe2a76-3bd9-11e7-8202-09f3daeae9b0.png)
 **Поддержка CRM**
 
