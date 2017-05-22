@@ -6,11 +6,11 @@ class modSimpleCallbackHelper
     {
         jimport('joomla.application.module.helper');
         // jimport('joomla.filesystem.folder');
-        // jimport('joomla.filesystem.file'); 
+        // jimport('joomla.filesystem.file');
         $config = JFactory::getConfig();
         $app = JFactory::getApplication();
         $input = JFactory::getApplication()->input;
-        $file = $input->files->get('simplecallback_file'); 
+        $file = $input->files->get('simplecallback_file');
         $data = $input->post->getArray();
         $session = JFactory::getSession();
         $domainsite = str_replace('https', '', JURI::base());
@@ -26,22 +26,22 @@ class modSimpleCallbackHelper
         $module = $db->loadObject();
         $params = new JRegistry();
         $params->loadString($module->params);
-        
+
         //Token check
         $session->checkToken() or die( 'Invalid Token' );
-        
+
         // Load language
         $app->getLanguage()->load('mod_simplecallback');
 
         $sender = $params->get('simplecallback_mailsender');
         $fromname = $params->get('simplecallback_emailfrom');
-        
+
         $honeypot = strip_tags($data['simplecallback_username']);
-        
+
         if (!empty($honeypot)) {
             die("GTFO");
         }
-        
+
         $recipients_array = explode(";", $params->get('simplecallback_emails'));
         $recipients = !empty($recipients_array) && !empty($recipients_array[0]) ? $recipients_array : array($config->get('mailfrom'), $config->get('fromname'));
         $subject = $params->get('simplecallback_email_subject');
@@ -58,7 +58,7 @@ class modSimpleCallbackHelper
         $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
         $page_url = $params->get('simplecallback_page_url');
         if(isset($data['zakonrf'])) {  $zakonrf = strip_tags($data['zakonrf']);} else { $zakonrf = null;}
-        
+
         if(isset($data['simplecallback_city_field_label'])) { $simplecallback_city_field_label = strip_tags($data['simplecallback_city_field_label']);  } else { $simplecallback_city_field_label = null;}
         if(isset($data['simplecallback_city_field_labe2'])) { $simplecallback_city_field_labe2 = strip_tags($data['simplecallback_city_field_labe2']);   } else { $simplecallback_city_field_labe2 = null;}
         if(isset($data['simplecallback_city_field_labe3'])) { $simplecallback_city_field_labe3 = strip_tags($data['simplecallback_city_field_labe3']);   } else { $simplecallback_city_field_labe3 = null;}
@@ -119,7 +119,7 @@ class modSimpleCallbackHelper
         $checkacy = '';
         $acy_extra1 = $params->get('simplecallback_acy_extra1');
         $acy_extra2 = $params->get('simplecallback_acy_extra2');
-                
+
         $bitrix24_enabled = $params->get('simplecallback_bitrix24_enabled');
         $bitrix24_crm_host = $params->get('simplecallback_bitrix24_crm_host');
         $bitrix24_crm_port = $params->get('simplecallback_bitrix24_crm_port', 443);
@@ -178,7 +178,8 @@ class modSimpleCallbackHelper
         
         if (!empty($sender)) {
             $mail->setSender(array($sender, $fromname));
-            $mail->addReplyTo(array($sender, $fromname));
+            if (!empty($emailclient)) { $mail->addReplyTo(array($emailclient, $fromname)); }
+            else { $mail->addReplyTo(array($sender, $fromname)); }
         } else {
             $sender = array(
             $config->get( 'mailfrom' ),
@@ -186,7 +187,8 @@ class modSimpleCallbackHelper
             );
             
             $mail->setSender($sender);
-            $mail->addReplyTo($sender);
+            if (!empty($emailclient)) { $mail->addReplyTo($emailclient); }
+            else {$mail->addReplyTo($sender);}
         }
 
 
@@ -194,6 +196,7 @@ class modSimpleCallbackHelper
         {
             $mail->addAttachment($file['tmp_name'], $file['name']);  
         }
+
 
 
         $mail->setSubject($subject);
@@ -233,7 +236,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             $db_message->updated = $db_message->created;
             $db_result = JFactory::getDbo()->insertObject('#__simplecallback_messages', $db_message);
         }
-        
+
         if (true == $sent) {
 
             //SMS.RU SEND
@@ -283,7 +286,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondataCall);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
                 $resultPostCall = curl_exec($ch);
                 curl_close($ch);
@@ -312,11 +315,11 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_TIMEOUT, 0);
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 $slack_result = curl_exec($ch);
                 curl_close($ch);
             }
-     
+
             if ($mattermost_enabled === '1' && !empty($mattermost_webhookurl)) {
                 $url = $mattermost_webhookurl;
                 $ch = curl_init();
@@ -333,11 +336,11 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_TIMEOUT, 0);
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 $mattermost_result = curl_exec($ch);
                 curl_close($ch);
             }
-          
+
 		    if ($vk_enabled === '1' && !empty($vk_access_token)) {
 
                 function vkpush($method, $post = false) {
@@ -354,12 +357,12 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $json = json_decode($response, true);
                 if (isset($json["error"]["error_msg"])) {
                     return $json["error"];
-                    } 
+                    }
                 else {
                     return $json["response"];
-                    }           
+                    }
                 }
-                
+
 				$vk_message = $datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple .  "\n" . $message  . "\n" . $page_url  . "\n" . $redirect_url_title . " ".$vk_userpush;
 
                 if ($vk_wall_post === '1') {
@@ -367,7 +370,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 vkpush('wall.post', array('owner_id' => '-'.$vk_group_id,  'from_group' => $vk_from_group, 'message' => $vk_message,  'access_token' => $vk_access_token));
 
                 }
-                
+
                 if ($vk_board_comment === '1') {
 
                 vkpush("board.createComment", array("group_id" => $vk_group_id, "topic_id" => $vk_topic_id, "message" => $vk_message,  "from_group" => $vk_from_group,  "access_token" => $vk_access_token));
@@ -392,19 +395,19 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsTrello);
                 curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
                 curl_setopt($ch, CURLOPT_HEADER, 1);
-                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE); 
+                curl_setopt($ch, CURLINFO_HEADER_OUT, TRUE);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 0);
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncodedq);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 $Trello_result = curl_exec($ch);
                 curl_close($ch);
             }
-               
+
             if ($bitrix24_enabled === '1' && !empty($bitrix24_crm_host) && !empty($bitrix24_crm_login) && !empty($bitrix24_crm_password))
-                {   
-                
+                {
+
               $message_b24 = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message  ." " . $page_url  ." " . $redirect_url_title;
 
                 $postData = array(
@@ -461,8 +464,8 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                         }
              }
             if ($amocrm_enabled === '1' && !empty($amocrm_crm_host) && !empty($amocrm_crm_login) && !empty($amocrm_crm_password))
-                {   
-                            
+                {
+
                 $message_amocrm = $datemsg . " " . $simplecallback_city_field_label.   " " .$simplecallback_city_field_labe2. " " .  $simplecallback_city_field_labe3 . " " .$simplecallback_custom_textsimple ." " . $message;
 
                 $subdomain = $amocrm_crm_host;
@@ -471,8 +474,8 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     'USER_HASH'=>$amocrm_crm_password
                 );
 
-                $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';    
-                $curl=curl_init(); 
+                $link='https://'.$subdomain.'.amocrm.ru/private/api/auth.php?type=json';
+                $curl=curl_init();
                 curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
                 curl_setopt($curl,CURLOPT_USERAGENT,'amoCRM-API-client/1.0');
                 curl_setopt($curl,CURLOPT_URL,$link);
@@ -481,7 +484,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($curl,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
                 curl_setopt($curl,CURLOPT_HEADER,false);
                 curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__).'/cookie.txt');
-                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt'); 
+                curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__).'/cookie.txt');
                 curl_setopt($curl,CURLOPT_SSL_VERIFYPEER,0);
                 curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
 
@@ -525,7 +528,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                         );
 
                 $contact['custom_fields'][]=array(
-                        'id' => $amocrm_crm_custom_fields_phone, 
+                        'id' => $amocrm_crm_custom_fields_phone,
                         'values'=>array(
                         array(
                             'value'=>$phone,
@@ -535,7 +538,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     );
 
                 $contact['custom_fields'][]=array(
-                        'id' => $amocrm_crm_custom_fields_emailclient,  
+                        'id' => $amocrm_crm_custom_fields_emailclient,
                         'values'=>array(
                         array(
                             'value'=>$emailclient,
@@ -602,7 +605,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
              }
 
             if ($megaplan_enabled === '1') {
-               
+
             require_once dirname(__FILE__) . '/crm/megaplan/Request.php';
 
                 // Авторизуемся в Мегаплане
@@ -628,16 +631,16 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 // Создаем задачу
                 $raw = $request->post('/BumsCrmApiV01/Contractor/save.api',array(
                         'Model[FirstName]' => $name,
-                        'Model[TypePerson]' => "human",		
+                        'Model[TypePerson]' => "human",
                         'Model[LastName]' => " ",
                         'Model[MiddleName]' => $megaplan_middleName,
                         'Model[Email]' => $emailclient,
-                        'Model[Phones]' => array("ph_m{$phone}\tSimpleCallback"),	
-                        'Model[Responsible]' => $megaplan_responsible,	
+                        'Model[Phones]' => array("ph_m{$phone}\tSimpleCallback"),
+                        'Model[Responsible]' => $megaplan_responsible,
                         ) );
 
                 // Чистый форматированный JSON (ответ сервера с ID созданной задачи)
-                $queryContact = json_decode($raw, true);     
+                $queryContact = json_decode($raw, true);
 
                 $NewCustomerId = $queryContact['data']['contractor']['Id'];
 
@@ -654,26 +657,26 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
 
                 // Чистый форматированный JSON (ответ сервера с ID созданной задачи)
                 $query = json_decode($raw, true);
-               
+
            }
 
            if ($acy_enabled === '1' && !empty($emailclient)) {
-                            
+
                 if (!include_once (rtrim(JPATH_ADMINISTRATOR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_acymailing' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'helper.php')) {
                     // false
                 }
                 else {
 
-                    $subscribe = explode(',',$acy_subscribe); 
+                    $subscribe = explode(',',$acy_subscribe);
                     $newSubscription = array();
 
                     if (!empty($subscribe)) {
                         foreach($subscribe as $listId) {
                             $newList = array();
-                       if ($acy_subscribe_active == 1) {  
-                           
-                            $newList['status'] = 1; } 
-                       
+                       if ($acy_subscribe_active == 1) {
+
+                            $newList['status'] = 1; }
+
                        else {
                                 $newList['status'] = 0;
                        }
@@ -688,15 +691,15 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                     if (empty($name)) {
                         $name = $emailclient;
                     }
-                    
-                    $myUser->name = $name; 
+
+                    $myUser->name = $name;
 
                     if (!empty($phone)) {
-                       $myUser->phone = $phone; 
+                       $myUser->phone = $phone;
                     }
 
                     if (!empty($message)) {
-                       $myUser->message = $message; 
+                       $myUser->message = $message;
                     }
 
                     $subscriberClass = acymailing_get('class.subscriber');
@@ -712,7 +715,7 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             ));
 
 
-            
+
             die();
         } else {
             echo json_encode(array(
