@@ -4,7 +4,6 @@
 ```
        jQuery(document).on('click', function() {
             simplecallback.hide();
-
             return false;
         });
 ```
