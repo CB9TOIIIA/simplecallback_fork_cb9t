@@ -57,3 +57,6 @@
 ![image](http://img-fotki.yandex.ru/get/104083/77677229.85/0_ab373_7c9443c3_orig.png)
 
 ![image](http://img-fotki.yandex.ru/get/56520/77677229.86/0_ab374_cd873914_orig.png)
+
+# Suhosin и прочие хостинги
+> Было обнаружено, что suhosin на хостингах вместе с фаерволом бывает блокируют форму (рвется json - белый лист).
