@@ -183,7 +183,7 @@
     });
 
     $(function () {
-        var redirecttourl = $("#redirectsuccesssimplecallback").text();
+
         var simplecallback = {
             show: function(id, customData) {
                 if (id && $('body > #simplecallback-' + id).length > 0) {
@@ -227,7 +227,8 @@
 
             form.addClass('simplecallback-loading');
             submitBtn.attr('disabled', true);
-
+            var redirecttourl = form.find('#redirectsuccesssimplecallback').text();
+            
             $.ajax({
                 type: "POST",
                 url: actionUrl,
