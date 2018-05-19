@@ -253,7 +253,14 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
             if ($telegram_enabled === '1' && !empty($telegram_chat_id)) {
                 $telegram_text = urlencode($datemsg . "\n" . $subject . "\n" .  $name . "\n" . $emailclient . "\n" . $phone. "\n" . $simplecallback_city_field_label.  $simplecallback_city_field_labe2.  $simplecallback_city_field_labe3 . $simplecallback_custom_textsimple ."\n" . $message  . "\n" . $page_url  . "\n" . $redirect_url_title);
                 $telegram_request_url = 'https://telegram.cb9t.ru/modsimplecallbackbot/fromweb.php?chatid=' . $telegram_chat_id . '&text=' . $telegram_text;
-                $telegram_result = file_get_contents($telegram_request_url);
+				$ch = curl_init($telegram_request_url);
+                    curl_setopt_array($ch, array(
+                        CURLOPT_POST => TRUE,
+                        CURLOPT_RETURNTRANSFER => TRUE,
+                        CURLOPT_HTTPHEADER => array("Content-Type: application/json"),
+                    ));
+                    $telegram_result = curl_exec($ch);
+                    curl_close($ch);
             }
 
 

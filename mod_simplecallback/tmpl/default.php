@@ -5,6 +5,11 @@ $app = JFactory::getApplication();
 JHtml::_('jquery.framework');
 $menu = $app->getMenu()->getActive()->id;
 $document = JFactory::getDocument();
+$simplecallback_jq_enabled = $params->get('simplecallback_jq_enabled', 0);
+if ($simplecallback_jq_enabled == 1) {
+  $document->addScript(JUri::base() . 'media/jui/js/jquery.min.js');
+  $document->addScript(JUri::base() . 'media/jui/js/jquery-noconflict.js');
+  }
 $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/simplecallback.css');
 $document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.js');
 $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/sweetalert.css');
@@ -65,6 +70,8 @@ $my_text_after = $params->get('simplacallback_my_text_after');
 $label_enabled = $params->get('simplacallback_label_enabled', 1);
 $placeholder_enabled = $params->get('simplacallback_placeholder_enabled', 0);
 
+
+
 if ($my_inline_css_enabled == 1) {
   echo '<style>'.$my_inline_css.'</style>';
 }
@@ -89,10 +96,6 @@ else {
    $reachgoal_text = '';
 }
 
-if ($my_text_before_enabled == 1) {
-  echo "<div class='beforeformtext'>".$my_text_before."</div>";
-}
-
 
 
 ?>
@@ -108,11 +111,25 @@ if ($my_text_before_enabled == 1) {
           <?php include JPATH_SITE . '/media/mod_simplecallback/images/loading.svg'; ?>
         </div>
         <div class="simplecallback-close" data-simplecallback-close>&times;</div>
+        
+        <?php 
+if ($my_text_before_enabled == 1 && $overlayed == 1) {
+  echo "<div class='beforeformtext'>".$my_text_before."</div>";
+}
+?>
         <?php if ($module->showtitle) {
     echo "<$header_tag class='$header_class'>$module->title</$header_tag>";
 } ?>
           <?php endif; ?>
 
+
+        <?php 
+
+if ($my_text_before_enabled == 1 && $overlayed != 1) {
+  echo "<div class='beforeformtext'>".$my_text_before."</div>";
+}
+
+?>
 
     <?php if ($namemod_enabled == 1) : ?>
             <div class="control-group">
