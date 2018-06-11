@@ -16,6 +16,9 @@ body.stop-scrolling {
   display: none;
   z-index: 10000; }
 
+.sweet-alert fieldset {
+    display: none;
+}
 .sweet-alert {
   background-color: white;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;

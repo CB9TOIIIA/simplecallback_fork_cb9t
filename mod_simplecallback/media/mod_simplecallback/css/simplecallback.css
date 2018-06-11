@@ -8,9 +8,33 @@
     background: rgba(0, 0, 0, 0.6);
     z-index: 10000;
 }
-
+.zakonrf label {
+  font-size: 0.9rem;
+  padding: 5px;
+  line-height: 1.2;
+}
+.zakonrf label input {
+  margin-right: 15px;
+}
+.zakonrf label input {
+  margin-right: 15px;
+  height: 30px;
+  width: 30px;
+  position: relative;
+  padding: 20px;
+  float: left;
+  line-height: 2;
+}
+input#customFile {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.simplecallback div#captcha {
+  padding: 5px 10px 15px 10px;
+}
 .simplecallback-overlayed {
-    width: 260px;
+    width: 360px;
     position: absolute;
     left: 50%;
     top: 30px;
@@ -18,7 +42,7 @@
     z-index: 10010;
     background: #fff;
     padding: 30px;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(0,0,0, 0.5);
 }

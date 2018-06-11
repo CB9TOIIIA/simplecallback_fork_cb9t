@@ -101,7 +101,7 @@ else {
 
 ?>
 
-  <form enctype="multipart/form-data" id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
+  <form enctype="multipart/form-data" id="simplecallback-<?php echo $module->id; ?>" action="<?php echo JURI::root(); ?>index.php?option=com_ajax&module=simplecallback&format=json" class="form-inline d-flex justify-content-center simplecallback<?php echo $moduleclass_sfx ?> <?php if ($overlayed == 1) { echo " simplecallback-overlayed
   "; } ?>" method="post" <?php if (!empty($phone_mask) && $phone_mask !='' ) { echo "data-simplecallback-phone-mask='$phone_mask'"; } ?>
     data-simplecallback-form
     <?php if ($overlayed == 1) { echo "data-simplecallback-form-overlayed style='display: none;'"; } ?>
@@ -134,7 +134,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 
     <?php if ($namemod_enabled == 1) : ?>
             <div class="form-group">
-              <label><div class="textlabel col-form-label">
+              <label><div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_name_field_label'); ?> <?php echo $zv_name_req ?>  </div>
                   <input type="text"  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_name_field_label')}'" ;} ?>  name="simplecallback_name" <?php echo $name_req ?> class="input-block-level form-control mr-sm-2" autocomplete="off" />
               </label>
@@ -143,18 +143,17 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 
     <?php if ($custom_textsimple_enabled == 1) : ?> 
             <div class="form-group">
-              <label><div class="textlabel col-form-label">
+              <label><div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_custom_textsimple'); ?> <?php echo $zv_textsimple_req ?>  </div>
                   <input type="text"  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_custom_textsimple')}'" ;} ?>  name="custom_textsimple" <?php echo $custom_textsimple_req ?> class="input-block-level form-control mr-sm-2" autocomplete="off" />
               </label>
             </div>   
           <?php endif; ?>
 
-      
 
             <?php if ($telmod_enabled == 1) : ?>
             <div class="form-group">
-              <label><div class="textlabel col-form-label">
+              <label><div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_phone_field_label'); ?>  <?php echo $zv_phone_req ?>  </div>
                   <input  <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_phone_field_label')}'" ;} ?> type="tel" <?php
                   
@@ -173,7 +172,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 
     <?php if ($emailclient_enabled == 1) : ?>
             <div class="form-group">
-              <label><div class="textlabel col-form-label">
+              <label><div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_emailclient_field_label'); ?>  <?php echo $zv_emailclient_req ?>  </div>
                   <input type="text"   <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_emailclient_field_label')}'" ;} ?>  name="simplecallback_emailclient"  <?php echo $emailclient_req ?>  class="input-block-level form-control mr-sm-2" autocomplete="off" />
               </label>
@@ -219,7 +218,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 
     <?php if ($rating_enabled == 1) : ?>
             <div class="form-group">
-              <label> <div class="textlabel col-form-label">
+              <label> <div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_rating_field_label'); ?>      </div>  </label>
                  <div class="clearfix"></div>
    <div id="reviewStars-input">
@@ -245,25 +244,26 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 
             <?php if ($message_enabled == 1) : ?>
               <div class="form-group textareaq">
-                <label> <div class="textlabel col-form-label">
+                <label> <div class="textlabel col-form-label my-1 mr-2">
                   <?php echo $params->get('simplecallback_message_field_label'); ?>  <?php echo $zv_message_req ?>    </div>
                 </label>
                 <textarea <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_message_field_label')}'" ;} ?> type="text" <?php echo $textarea_width_cols ?> <?php echo $textarea_width_rows ?> name="simplecallback_message" <?php echo $message_req ?>  class="input-block-level form-control mr-sm-2" autocomplete="off"></textarea>
               </div>
               <?php endif; ?>
 
-    
+
+          
 
           <?php if ($simplecallback_file_enabled == 1) : ?>
-           <div class="form-group custom-file">
-              <label class="custom-file-label" for="customFile">
-               <?php echo $params->get('simplecallback_file_field_label'); ?>
-               <input type="file" class="custom-file-input" id="customFile" name="simplecallback_file" />
+           <div class="form-group">
+              <label><div class="textlabel col-form-label my-1 mr-2">
+               <?php echo $params->get('simplecallback_file_field_label'); ?>  </div>
+               <input type="file" name="simplecallback_file" />
               </label>
             </div>   
           <?php endif; ?>
 
-
+          
       <?php  
       if ($redirect_enabled == 1) {
        echo $redirect_url ='<div style="display:none" id="redirectsuccesssimplecallback">'.$redirect_url.'</div>';
@@ -275,7 +275,10 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
     ?>
 
        <?php if ($zakonrf_mode == 1) : ?>    
-<div class="zakonrf">
+<div class="container">
+<div class="row">
+  <div class="col"></div>
+<div class="zakonrf col-6">
 
   <?php if (!empty($zakonrf_link)) : ?>
    <label><input name="zakonrf" class="" required type="checkbox"/> <a target="_blank" rel="nofollow" href="<?php echo $zakonrf_link ?>"> <?php echo $zakonrf_link_text; ?></a></label>
@@ -285,11 +288,15 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
    <label><input name="zakonrf" class="" required type="checkbox"/> <?php echo $zakonrf_link_text; ?></label>
   <? endif; ?>
 
+
+</div>
+<div class="col"></div>
+</div>
 </div>
       <?php endif;  ?>
 
       <?php if ($recaptcha_enabled == 1) : ?>    
-     <div class="row"> <div class="col-sm"> <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>   </div>   </div> 
+      <div class="d-flex justify-content-center"> <div class="container">   <div class="row"> <div class="col-sm"> <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>   </div>   </div>  </div> </div>
       <?php endif; ?>
                     <div class="form-group">
                       <input type="text" name="simplecallback_username" class="simplecallback-username" maxlength="10">
