@@ -1,3 +1,4 @@
+[![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)  [![forthebadge](https://forthebadge.com/images/badges/ages-18.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/winter-is-coming.svg)](https://forthebadge.com)
 ## Модуль обратного звонка  (форма обратной связи для Joomla!)
 ### Мои релизы: https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/releases
 
