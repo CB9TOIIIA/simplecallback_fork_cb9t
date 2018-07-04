@@ -12,7 +12,10 @@ if ($simplecallback_jq_enabled == 1) {
   $document->addScript(JUri::base() . 'media/jui/js/jquery-noconflict.js');
 }
 
-if (!defined('SIMPLECALLBACK')){
+
+$js_body = $params->get('simplecallback_js_body', 0);
+
+if (!defined('SIMPLECALLBACK') || $js_body == 0) {
  
   $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/simplecallback.css');
   $document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.js');
@@ -20,12 +23,15 @@ if (!defined('SIMPLECALLBACK')){
   $document->addScript(JUri::base() . 'media/mod_simplecallback/js/sweetalert.min.js');
   defined('SIMPLECALLBACK') or define('SIMPLECALLBACK',1);
 }
-if (!defined('SIMPLECALLBACK') || !defined('SIMPLECALLBACKDOM')){
-    defined('SIMPLECALLBACKDOM') or define('SIMPLECALLBACKDOM',1);
-    echo '<link href="'.JUri::root().'media/mod_simplecallback/css/simplecallback.css" rel="stylesheet" />'."\n";
-    echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/simplecallback.js"></script>'."\n";
-    echo '<link href="'.JUri::root().'media/mod_simplecallback/css/sweetalert.css" rel="stylesheet" />'."\n";
-    echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/sweetalert.min.js"></script>'."\n";
+
+if ($js_body == 1) {
+  if (!defined('SIMPLECALLBACK') || !defined('SIMPLECALLBACKDOM')) {
+      defined('SIMPLECALLBACKDOM') or define('SIMPLECALLBACKDOM',1);
+      echo '<link href="'.JUri::root().'media/mod_simplecallback/css/simplecallback.css" rel="stylesheet" />'."\n";
+      echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/simplecallback.js"></script>'."\n";
+      echo '<link href="'.JUri::root().'media/mod_simplecallback/css/sweetalert.css" rel="stylesheet" />'."\n";
+      echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/sweetalert.min.js"></script>'."\n";
+  }
 }
 
 defined('SIMPLECALLBACK') or define('SIMPLECALLBACK',1);
@@ -291,19 +297,19 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
    
     ?>
 
-       <?php if ($zakonrf_mode == 1) : ?>    
-<div class="container">
-<div class="row">
-  <div class="col"></div>
-<div class="zakonrf col-6">
+<?php if ($zakonrf_mode == 1) : ?>    
+<div class="zakonrf">
 
   <?php if (!empty($zakonrf_link)) : ?>
    <label><input name="zakonrf" class="" required type="checkbox"/> <a target="_blank" rel="nofollow" href="<?php echo $zakonrf_link ?>"> <?php echo $zakonrf_link_text; ?></a></label>
-  <? endif; ?>
+   <?php endif; ?>
 
-  <? if (empty($zakonrf_link)) : ?>
+  <?php if (empty($zakonrf_link)) : ?>
    <label><input name="zakonrf" class="" required type="checkbox"/> <?php echo $zakonrf_link_text; ?></label>
-  <? endif; ?>
+   <?php endif; ?>
+
+</div>
+<?php endif;  ?>
 
 
 </div>
