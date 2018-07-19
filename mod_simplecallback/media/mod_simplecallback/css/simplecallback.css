@@ -175,3 +175,6 @@ input#customFile {
 #reviewStars-input #star-5 {
   left: 156px;
 }
+.simplecallback label {
+    width: 100%;
+}
