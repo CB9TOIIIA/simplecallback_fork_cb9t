@@ -5,10 +5,10 @@
 		<description>mod_simplecallback</description>
 		<element>mod_simplecallback</element>
 		<type>module</type>
-		<version>1.59</version>
+		<version>1.6</version>
 		<infourl title="mod_simplecallback">https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip"><![CDATA[https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/releases/download/1.59/mod_simplecallback_1.59.zip]]></downloadurl>
+			<downloadurl type="full" format="zip"><![CDATA[https://github.com/CB9TOIIIA/simplecallback_fork_cb9t/releases/download/1.6/mod_simplecallback_1.6.zip]]></downloadurl>
 		</downloads>
 		<tags>
 			<tag>stable</tag>
