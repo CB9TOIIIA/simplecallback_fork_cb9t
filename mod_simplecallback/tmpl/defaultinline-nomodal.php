@@ -311,12 +311,9 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
 </div>
 <?php endif;  ?>
 
-
-</div>
 <div class="col"></div>
-</div>
-</div>
-      <?php endif;  ?>
+
+ 
 
       <?php if ($recaptcha_enabled == 1) : ?>    
       <div class="d-flex justify-content-center"> <div class="container">   <div class="row"> <div class="col-sm"> <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>   </div>   </div>  </div> </div>
@@ -333,7 +330,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
                           <?php echo $params->get('simplecallback_submit_field_label'); ?>
                         </button>
                     </div>
-      
+           </div>   
   </form>
 
 <?php 
