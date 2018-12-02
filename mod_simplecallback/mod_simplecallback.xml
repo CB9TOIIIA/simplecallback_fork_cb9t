@@ -101,7 +101,7 @@
                     name="simplecallback_phone_field_pattern"
                     label="Паттерн проверки (RegExp)"
                     description=""
-                    default="(\+?\d[- .]*){6,14}"></field>
+                    default="(\+?\d[- .()]*){6,14}"></field>
                     <field
                     type="spacer"
                     name="myspacerexexp4"
