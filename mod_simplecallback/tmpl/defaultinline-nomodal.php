@@ -6,14 +6,37 @@ JHtml::_('jquery.framework');
 $menu = $app->getMenu()->getActive()->id;
 $document = JFactory::getDocument();
 $simplecallback_jq_enabled = $params->get('simplecallback_jq_enabled', 0);
+
 if ($simplecallback_jq_enabled == 1) {
   $document->addScript(JUri::base() . 'media/jui/js/jquery.min.js');
   $document->addScript(JUri::base() . 'media/jui/js/jquery-noconflict.js');
+}
+
+
+$js_body = $params->get('simplecallback_js_body', 0);
+
+if (!defined('SIMPLECALLBACK') || $js_body == 0) {
+ 
+  $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/simplecallback.css');
+  $document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.js');
+  $document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/sweetalert.css');
+  $document->addScript(JUri::base() . 'media/mod_simplecallback/js/sweetalert.min.js');
+  defined('SIMPLECALLBACK') or define('SIMPLECALLBACK',1);
+}
+
+if ($js_body == 1) {
+  if (!defined('SIMPLECALLBACK') || !defined('SIMPLECALLBACKDOM')) {
+      defined('SIMPLECALLBACKDOM') or define('SIMPLECALLBACKDOM',1);
+      echo '<link href="'.JUri::root().'media/mod_simplecallback/css/simplecallback.css" rel="stylesheet" />'."\n";
+      echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/simplecallback.js"></script>'."\n";
+      echo '<link href="'.JUri::root().'media/mod_simplecallback/css/sweetalert.css" rel="stylesheet" />'."\n";
+      echo '<script type="text/javascript" src="'.JUri::root().'media/mod_simplecallback/js/sweetalert.min.js"></script>'."\n";
   }
-$document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/simplecallback.css');
-$document->addScript(JUri::base() . 'media/mod_simplecallback/js/simplecallback.js');
-$document->addStyleSheet(JUri::base() . 'media/mod_simplecallback/css/sweetalert.css');
-$document->addScript(JUri::base() . 'media/mod_simplecallback/js/sweetalert.min.js');
+}
+
+defined('SIMPLECALLBACK') or define('SIMPLECALLBACK',1);
+
+
 JHTML::_('behavior.formvalidation');
 $zakonrf_mode = $params->get('simplecallback_zakonrf_mode');
 $zakonrf_link_text = $params->get('simplacallback_zakonrf_link_text');
@@ -174,7 +197,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
             <div class="form-group">
               <label><div class="textlabel col-form-label my-1 mr-2">
                 <?php echo $params->get('simplecallback_emailclient_field_label'); ?>  <?php echo $zv_emailclient_req ?>  </div>
-                  <input type="text"   <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_emailclient_field_label')}'" ;} ?>  name="simplecallback_emailclient"  <?php echo $emailclient_req ?>  class="input-block-level form-control mr-sm-2" autocomplete="off" />
+                  <input type="email"   <?php if ($placeholder_enabled != 0) { echo "placeholder='{$params->get('simplecallback_emailclient_field_label')}'" ;} ?>  name="simplecallback_emailclient"  <?php echo $emailclient_req ?>  class="input-block-level form-control mr-sm-2" autocomplete="off" />
               </label>
             </div>   
           <?php endif; ?>
@@ -274,26 +297,23 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
    
     ?>
 
-       <?php if ($zakonrf_mode == 1) : ?>    
-<div class="container">
-<div class="row">
-  <div class="col"></div>
-<div class="zakonrf col-6">
+<?php if ($zakonrf_mode == 1) : ?>    
+<div class="zakonrf">
 
   <?php if (!empty($zakonrf_link)) : ?>
    <label><input name="zakonrf" class="" required type="checkbox"/> <a target="_blank" rel="nofollow" href="<?php echo $zakonrf_link ?>"> <?php echo $zakonrf_link_text; ?></a></label>
-  <? endif; ?>
+   <?php endif; ?>
 
-  <? if (empty($zakonrf_link)) : ?>
+  <?php if (empty($zakonrf_link)) : ?>
    <label><input name="zakonrf" class="" required type="checkbox"/> <?php echo $zakonrf_link_text; ?></label>
-  <? endif; ?>
-
+   <?php endif; ?>
 
 </div>
+<?php endif;  ?>
+
 <div class="col"></div>
-</div>
-</div>
-      <?php endif;  ?>
+
+ 
 
       <?php if ($recaptcha_enabled == 1) : ?>    
       <div class="d-flex justify-content-center"> <div class="container">   <div class="row"> <div class="col-sm"> <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>   </div>   </div>  </div> </div>
@@ -310,7 +330,7 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
                           <?php echo $params->get('simplecallback_submit_field_label'); ?>
                         </button>
                     </div>
-      
+           </div>   
   </form>
 
 <?php 

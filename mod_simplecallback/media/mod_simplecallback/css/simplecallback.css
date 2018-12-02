@@ -30,6 +30,10 @@ input#customFile {
   left: 0;
   top: 0;
 }
+.form-group.custom-file {
+    position: relative;
+    min-height: 40px;
+}
 .simplecallback div#captcha {
   padding: 5px 10px 15px 10px;
 }
@@ -170,4 +174,7 @@ input#customFile {
 }
 #reviewStars-input #star-5 {
   left: 156px;
+}
+.simplecallback label {
+    width: 100%;
 }

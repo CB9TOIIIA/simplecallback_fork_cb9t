@@ -1,5 +1,4 @@
 <?php
-
 class modSimpleCallbackHelper
 {
     public static function getAjax()
@@ -132,17 +131,22 @@ class modSimpleCallbackHelper
         $acy_subscribe = $params->get('simplecallback_acy_subscribe');
         $acy_subscribe_active = $params->get('simplecallback_acy_subscribe_active', 1);
 
+       
         $amocrm_enabled = $params->get('simplecallback_amocrm_enabled');
         $amocrm_crm_host = $params->get('simplecallback_amocrm_subdomain');
         $amocrm_crm_login = $params->get('simplecallback_amocrm_crm_login');
         $amocrm_crm_password = $params->get('simplecallback_amocrm_crm_hash');
         $amocrm_crm_status_id = $params->get('simplecallback_amocrm_crm_status_id');
+        $amocrm_crm_pipeline_id = $params->get('simplecallback_amocrm_crm_pipeline_id');
         $amocrm_crm_custom_fields_phone = (int)$params->get('simplecallback_amocrm_crm_custom_fields_phone');
         $amocrm_crm_custom_fields_emailclient = (int)$params->get('simplecallback_amocrm_crm_custom_fields_emailclient');
         $amocrm_crm_custom_fields_tags = $params->get('simplecallback_amocrm_crm_custom_fields_tags');
         $amocrm_crm_custom_fields_element_type = (int)$params->get('simplecallback_amocrm_crm_custom_fields_element_type');
         $amocrm_crm_custom_fields_task_type = (int)$params->get('simplecallback_amocrm_crm_custom_fields_task_type');
         $amocrm_crm_custom_fields_complete_till = (int)$params->get('simplecallback_amocrm_crm_custom_fields_complete_till');
+        $amocrm_tasks_enabled = $params->get('simplecallback_amocrm_tasks_enabled', 0);
+        $amocrm_contacts_enabled = $params->get('simplecallback_amocrm_contacts_enabled', 0);
+
 
         $megaplan_enabled = $params->get('simplecallback_megaplan_enabled');
         $megaplan_host = $params->get('simplecallback_megaplan_host');
@@ -499,12 +503,15 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
                 $Response=json_decode($out,true);
 
+                // jbdump::log($Response);
+
                 $new_lead_title = $subject;
 
                     $leads['request']['leads']['add']=array(
                     array(
                         'name'=>$new_lead_title,
                         'status_id'=>$amocrm_crm_status_id,
+                        'pipeline_id'=>$amocrm_crm_pipeline_id
                     )
                  );
 
@@ -524,41 +531,45 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 curl_setopt($curl,CURLOPT_SSL_VERIFYHOST,0);
 
                 $out=curl_exec($curl);
-                $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
+                // $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
                 $Response=json_decode($out,true);
 
-                $newleadid = $Response['response']['leads']['add'][0]['id'];
-                $lead_user_new = 1;
-                $contact=array(
-                            'responsible_user_id'=>$lead_user_new,
-                            'custom_fields'=>array()
+                // jbdump::log($Response);
+                
+                if ($amocrm_contacts_enabled == 1) {
+
+                    $newleadid = $Response['response']['leads']['add'][0]['id'];
+                    $lead_user_new = 1;
+                    $contact=array(
+                                'responsible_user_id'=>$lead_user_new,
+                                'custom_fields'=>array()
+                            );
+    
+                    $contact['custom_fields'][]=array(
+                            'id' => $amocrm_crm_custom_fields_phone,
+                            'values'=>array(
+                            array(
+                                'value'=>$phone,
+                                'enum'=>'HOME'
+                            )
+                            )
                         );
-
-                $contact['custom_fields'][]=array(
-                        'id' => $amocrm_crm_custom_fields_phone,
-                        'values'=>array(
-                        array(
-                            'value'=>$phone,
-                            'enum'=>'HOME'
-                        )
-                        )
-                    );
-
-                $contact['custom_fields'][]=array(
-                        'id' => $amocrm_crm_custom_fields_emailclient,
-                        'values'=>array(
-                        array(
-                            'value'=>$emailclient,
-                            'enum'=>'WORK'
-                        )
-                        )
-                    );
-
-                $contact['name'] = $name;
-                $contact['tags'] = $amocrm_crm_custom_fields_tags;
-                $contact['linked_leads_id'] = Array($newleadid);
-                $contact_params=Array();
-                $contact_params['request']['contacts']['add'][]=$contact;
+    
+                    $contact['custom_fields'][]=array(
+                            'id' => $amocrm_crm_custom_fields_emailclient,
+                            'values'=>array(
+                            array(
+                                'value'=>$emailclient,
+                                'enum'=>'WORK'
+                            )
+                            )
+                        );
+    
+                    $contact['name'] = $name;
+                    $contact['tags'] = $amocrm_crm_custom_fields_tags;
+                    $contact['linked_leads_id'] = Array($newleadid);
+                    $contact_params=Array();
+                    $contact_params['request']['contacts']['add'][]=$contact;
 
                 $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/contacts/set';
                 $curl=curl_init();
@@ -578,18 +589,21 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $out=curl_exec($curl);
                 $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
 
-                $leadRess = json_decode($out);
+                }
+
+                if ($amocrm_tasks_enabled == 1) {
+                    
                 // Ставим задачу
                 $tasks['request']['tasks']['add']=array(
-                array(
-                    'element_id' => $newleadid,
-                    'element_type' => $amocrm_crm_custom_fields_element_type, // Type: 1 - контакт, 2 - сделка
-                    'task_type' => $amocrm_crm_custom_fields_task_type, #Встреча
-                    'text'=> $message_amocrm,
-                    'complete_till' => time() + $amocrm_crm_custom_fields_complete_till,
-                )
-                );
-
+                    array(
+                        'element_id' => $newleadid,
+                        'element_type' => $amocrm_crm_custom_fields_element_type, // Type: 1 - контакт, 2 - сделка
+                        'task_type' => $amocrm_crm_custom_fields_task_type, #Встреча
+                        'text'=> $message_amocrm,
+                        'complete_till' => time() + $amocrm_crm_custom_fields_complete_till,
+                    )
+                    );
+            
                 $link='https://'.$subdomain.'.amocrm.ru/private/api/v2/json/tasks/set';
                 $curl=curl_init();
 
@@ -609,6 +623,8 @@ if ( trim( $input->getString( 'g-recaptcha-response' ) ) === '' && $recaptcha_en
                 $code=curl_getinfo($curl,CURLINFO_HTTP_CODE);
                 $Response=json_decode($out,true);
 
+
+                 }
              }
 
             if ($megaplan_enabled === '1') {
