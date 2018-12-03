@@ -178,3 +178,30 @@ input#customFile {
 .simplecallback label {
     width: 100%;
 }
+
+.simplecallback-overlayed input, 
+.simplecallback-overlayed textarea, 
+.simplecallback-overlayed .form-cols:not(:last-child), 
+.simplecallback-overlayed .custom-select{
+  margin-bottom: 10px;
+}
+@media only screen and (max-width: 992px){
+  .simplecallback-overlayed {
+      width: 90%;
+      margin-left: -45%;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+  }
+  .simplecallback-close{
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+  }
+}
+@media only screen and (max-width: 320px){
+  .simplecallback-overlayed{
+    padding: 20px;
+  }
+}

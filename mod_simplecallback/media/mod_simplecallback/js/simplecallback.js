@@ -277,7 +277,7 @@
         });
 
         if ($('[data-simplecallback-form-overlayed]').length > 0) {
-            var overlay = $('<div class="simplecallback-overlay">');
+            var overlay = $('<div class="simplecallback-overlay" data-simplecallback-close>');
             $('body').prepend(overlay);
         }
 
