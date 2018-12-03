@@ -455,6 +455,16 @@
                     <option value="0">JNO</option>
                     <option value="1">JYES</option>
                 </field> 
+               <field
+                    type="radio"
+                    name="simplacallback_title_overlay"
+                    label="Включить title у overlay?"
+                    description=""
+                    default="0"
+                    class="btn-group btn-group-yesno">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
             </fieldset>
             <fieldset name="crossposting" label="Кросспостинг">
 
