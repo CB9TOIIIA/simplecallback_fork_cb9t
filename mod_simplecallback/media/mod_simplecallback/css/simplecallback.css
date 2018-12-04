@@ -42,13 +42,14 @@ input#customFile {
     position: absolute;
     left: 50%;
     top: 30px;
-    margin-left: -130px;
+    margin-left: -180px;
     z-index: 10010;
     background: #fff;
     padding: 30px;
     text-align: left;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(0,0,0, 0.5);
+    box-sizing: border-box;
 }
 
 .simplecallback-overlayed.simplecallback-loading::before {
