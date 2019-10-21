@@ -101,7 +101,7 @@
                     name="simplecallback_phone_field_pattern"
                     label="Паттерн проверки (RegExp)"
                     description=""
-                    default="(\+?\d[- .]*){6,14}"></field>
+                    default="(\+?\d[- .()]*){6,14}"></field>
                     <field
                     type="spacer"
                     name="myspacerexexp4"
@@ -449,6 +449,16 @@
                     type="radio"
                     name="simplacallback_placeholder_enabled"
                     label="Включить placeholder?"
+                    description=""
+                    default="0"
+                    class="btn-group btn-group-yesno">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field> 
+               <field
+                    type="radio"
+                    name="simplacallback_title_overlay"
+                    label="Включить title у overlay?"
                     description=""
                     default="0"
                     class="btn-group btn-group-yesno">

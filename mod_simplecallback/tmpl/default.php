@@ -136,24 +136,21 @@ else {
         </div>
         <div class="simplecallback-close" data-simplecallback-close>&times;</div>
         
+        <?php if ($params->get('simplacallback_title_overlay', 0)) {
+          echo "<$header_tag class='$header_class'>$module->title</$header_tag>";
+        } ?>
         <?php 
-if ($my_text_before_enabled == 1 && $overlayed == 1) {
-  echo "<div class='beforeformtext'>".$my_text_before."</div>";
-}
-?>
-        <?php if ($module->showtitle) {
-    echo "<$header_tag class='$header_class'>$module->title</$header_tag>";
-} ?>
-          <?php endif; ?>
+        if ($my_text_before_enabled == 1 && $overlayed == 1) {
+          echo "<div class='beforeformtext form-group'>".$my_text_before."</div>";
+        }
+        ?>
+      <?php endif; ?>
 
-
-        <?php 
-
-if ($my_text_before_enabled == 1 && $overlayed != 1) {
-  echo "<div class='beforeformtext'>".$my_text_before."</div>";
-}
-
-?>
+      <?php 
+      if ($my_text_before_enabled == 1 && $overlayed != 1) {
+        echo "<div class='beforeformtext'>".$my_text_before."</div>";
+      }
+      ?>
 
     <?php if ($namemod_enabled == 1) : ?>
             <div class="form-group">
@@ -314,25 +311,21 @@ if ($my_text_before_enabled == 1 && $overlayed != 1) {
       <?php if ($recaptcha_enabled == 1) : ?>    
      <div class="row"> <div class="col-sm"> <?php  echo JCaptcha::getInstance( 'recaptcha' )->display( 'captcha', 'captcha', 'captcha' ); ?>   </div>   </div> 
       <?php endif; ?>
-                    <div class="form-group">
-                      <input type="text" name="simplecallback_username" class="simplecallback-username" maxlength="10">
-                      <?php echo JHtml::_( 'form.token' ); ?>
-                        <input type="hidden" name="module_id" value="<?php echo $module->id; ?>" />
-                        <input type="hidden" name="Itemid" value="<?php echo $menu; ?>">
-                        <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
-                        <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
-                        <input type="hidden" name="simplecallback_custom_data" value="">
-                        <button type="submit" <?php echo $reachgoal_text ?> class="<?php echo $submit_field_css; ?>">
-                          <?php echo $params->get('simplecallback_submit_field_label'); ?>
-                        </button>
-                    </div>
-      
+    <div class="form-group">
+      <input type="text" name="simplecallback_username" class="simplecallback-username" maxlength="10">
+      <?php echo JHtml::_( 'form.token' ); ?>
+        <input type="hidden" name="module_id" value="<?php echo $module->id; ?>" />
+        <input type="hidden" name="Itemid" value="<?php echo $menu; ?>">
+        <input type="hidden" name="simplecallback_page_title" value="<?php echo $document->getTitle(); ?>">
+        <input type="hidden" name="simplecallback_page_url" value="<?php echo JUri::getInstance()->toString(); ?>">
+        <input type="hidden" name="simplecallback_custom_data" value="">
+        <button type="submit" <?php echo $reachgoal_text ?> class="<?php echo $submit_field_css; ?>">
+          <?php echo $params->get('simplecallback_submit_field_label'); ?>
+        </button>
+    </div>
+    <?php 
+    if ($my_text_after_enabled == 1) {
+      echo "<div class='afterformtext'>".$my_text_after."</div>";
+    }
+    ?>
   </form>
-
-<?php 
-
-if ($my_text_after_enabled == 1) {
-  echo "<div class='afterformtext'>".$my_text_after."</div>";
-}
-
-?>
